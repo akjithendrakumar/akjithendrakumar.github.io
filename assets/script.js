@@ -6,14 +6,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const resumeAction = document.getElementById("resume-action");
-  const resumeNote = document.getElementById("resume-note");
 
-  if (resumeAction && resumeNote) {
-    applyResumeStatus(resumeAction, resumeNote);
+  if (resumeAction) {
+    applyResumeStatus(resumeAction);
   }
 });
 
-async function applyResumeStatus(resumeAction, resumeNote) {
+async function applyResumeStatus(resumeAction) {
   try {
     const response = await fetch(resolveResumeConfigPath());
     if (!response.ok) throw new Error("Unable to load resume config");
@@ -22,20 +21,13 @@ async function applyResumeStatus(resumeAction, resumeNote) {
     const mode = config.mode || "coming_soon";
     const label = config.label || defaultResumeLabel(mode);
     const url = config.url || "assets/resume.pdf";
-    const message = config.message || defaultResumeMessage(mode);
 
     resumeAction.textContent = label;
-    resumeNote.textContent = message;
 
     if (mode === "local") {
       const exists = await urlExists(url);
       if (!exists) {
-        setResumeComingSoonState(
-          resumeAction,
-          resumeNote,
-          label || "Download PDF",
-          message || "Use the button below to access the latest resume whenever it is available."
-        );
+        setResumeComingSoonState(resumeAction, label || "Download PDF");
         return;
       }
       resumeAction.href = url;
@@ -48,12 +40,7 @@ async function applyResumeStatus(resumeAction, resumeNote) {
 
     if (mode === "external") {
       if (!url) {
-        setResumeComingSoonState(
-          resumeAction,
-          resumeNote,
-          label || "Download PDF",
-          message || "Use the button below to access the latest resume whenever it is available."
-        );
+        setResumeComingSoonState(resumeAction, label || "Download PDF");
         return;
       }
       resumeAction.href = normalizeResumeUrl(url);
@@ -64,14 +51,9 @@ async function applyResumeStatus(resumeAction, resumeNote) {
       return;
     }
 
-    setResumeComingSoonState(resumeAction, resumeNote, label, message);
+    setResumeComingSoonState(resumeAction, label);
   } catch (error) {
-    setResumeComingSoonState(
-      resumeAction,
-      resumeNote,
-      "Resume Coming Soon",
-      "Resume configuration is unavailable right now. A placeholder status page will be shown instead."
-    );
+    setResumeComingSoonState(resumeAction, "Download PDF");
   }
 }
 
@@ -86,11 +68,6 @@ function defaultResumeLabel(mode) {
   return "Download PDF";
 }
 
-function defaultResumeMessage(mode) {
-  if (mode === "local") return "Use the button below to access the latest resume whenever it is available.";
-  if (mode === "external") return "Use the button below to download the latest resume from the configured external source.";
-  return "Use the button below to access the latest resume whenever it is available.";
-}
 
 async function urlExists(url) {
   try {
@@ -108,7 +85,7 @@ async function urlExists(url) {
   }
 }
 
-function setResumeComingSoonState(resumeAction, resumeNote, label, message) {
+function setResumeComingSoonState(resumeAction, label) {
   resumeAction.textContent = label || "Download PDF";
   resumeAction.href = "#";
   resumeAction.removeAttribute("download");
@@ -124,7 +101,6 @@ function setResumeComingSoonState(resumeAction, resumeNote, label, message) {
   resumeAction.onmouseleave = () => {
     resumeAction.textContent = resumeAction.dataset.defaultLabel || "Download PDF";
   };
-  resumeNote.textContent = message;
 }
 
 function clearResumePendingState(resumeAction) {
