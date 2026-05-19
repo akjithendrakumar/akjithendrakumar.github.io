@@ -3,7 +3,7 @@
 This repository contains a static portfolio site and blog intended to be hosted on GitHub Pages.
 
 Quick notes
-- The site root is the repository root. For GitHub Pages, you can publish from the `gh-pages` branch (workflow added) or adjust settings to publish from the root.
+- The site root is the repository root. GitHub Pages should publish directly from the `main` branch root.
 - Place your PDF resume at `assets/resume.pdf` to enable the download link on `resume.html`.
 
 Blog workflow
@@ -23,13 +23,12 @@ Workflows and PAT setup
 - Create a token with access to only this repository (`akjithendrakumar/akjithendrakumar.github.io`).
 - Required repository permissions:
   - Contents: Read & write
-  - Pages: Read & write
   - Actions / Workflows: Read & write (optional only if workflow metadata or workflow run management is needed)
 - Set a reasonable expiration, then copy the token once.
 - Add the token as a single repository secret named `REPO_PAT` (Settings → Secrets and variables → Actions → New repository secret).
-- Both workflows use `REPO_PAT`: the generator workflow commits generated files back to `main`, and the Pages deploy workflow publishes to `gh-pages`.
+- The generator workflow uses `REPO_PAT` to commit generated files back to `main`.
 
 Important: keep the PAT secret safe and rotate it if compromised. If you prefer not to use a PAT, you can instead allow `GITHUB_TOKEN` push access on the repository or organization settings.
 Deployment
-- A GitHub Action (`.github/workflows/deploy.yml`) deploys the repo contents to the `gh-pages` branch when you push to `main`.
-- To enable Pages, go to repository Settings → Pages and select `gh-pages` branch as the source.
+- The only publish workflow runs on pushes to `main`, which means feature branches should go through a pull request and only publish after merge.
+- To enable Pages, go to repository Settings → Pages and select `Deploy from a branch`, then choose `main` and `/ (root)`.
