@@ -4,6 +4,8 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
+  schedule:
+    - cron: "5 7 * * *"
 
 concurrency:
   group: generate-site-assets-main
@@ -15,6 +17,8 @@ permissions:
 jobs:
   generate:
     runs-on: ubuntu-latest
+    env:
+      TZ: America/Los_Angeles
     steps:
       - name: Checkout
         uses: actions/checkout@v4

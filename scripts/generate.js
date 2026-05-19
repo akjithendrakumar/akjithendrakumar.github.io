@@ -38,9 +38,10 @@ async function main() {
   console.log('Wrote', outIndex);
 
   // generate rss
+  const publishedPosts = posts.filter((post) => isPublished(post.date));
   const siteUrl = 'https://akjithendrakumar.github.io';
   let rss = `<?xml version="1.0" encoding="utf-8"?>\n<rss version="2.0">\n  <channel>\n    <title>Jithendra Kumar — Blog</title>\n    <link>${siteUrl}</link>\n    <description>Blog posts about cloud architecture, DevOps, and MLOps.</description>\n    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>\n`;
-  for (const p of posts) {
+  for (const p of publishedPosts) {
     rss += `    <item>\n      <title>${escapeXml(p.title)}</title>\n      <link>${siteUrl}/blog/${p.url}</link>\n      <pubDate>${new Date(p.date).toUTCString()}</pubDate>\n      <description>${escapeXml(p.excerpt)}</description>\n      <guid>${siteUrl}/blog/${p.url}</guid>\n    </item>\n`;
   }
   rss += '  </channel>\n</rss>\n';
@@ -98,6 +99,15 @@ async function collectMarkdownFiles(rootDir, currentDir = rootDir) {
 function inferDateFromFilename(file) {
   const m = file.match(/(\d{4}-\d{2}-\d{2})/);
   return m ? m[1] : null;
+}
+
+function isPublished(dateString, now = new Date()) {
+  if (!dateString) return true;
+  const parts = dateString.split('-').map(Number);
+  if (parts.length !== 3 || parts.some(Number.isNaN)) return true;
+  const [year, month, day] = parts;
+  const publishAt = new Date(year, month - 1, day, 0, 0, 0, 0);
+  return now.getTime() >= publishAt.getTime();
 }
 
 function toWebPath(file) {

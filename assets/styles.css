@@ -5,9 +5,10 @@
   --bg-alt: #0e1324;
   --surface: rgba(14, 19, 36, 0.74);
   --surface-strong: rgba(22, 29, 54, 0.96);
-  --text: #f4f7ff;
-  --muted: #a8b3d1;
-  --line: rgba(166, 183, 255, 0.18);
+  --text: #e9f0ff;
+  --heading: #f8fbff;
+  --muted: #bcc8e8;
+  --line: rgba(176, 195, 255, 0.2);
   --accent: #59d7ff;
   --accent-strong: #8ce6ff;
   --accent-soft: rgba(89, 215, 255, 0.14);
@@ -181,7 +182,7 @@ h3 {
 }
 
 .brand-meta {
-  color: var(--muted);
+  color: #d0dcff;
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.68rem;
   font-weight: 700;
@@ -241,6 +242,18 @@ h2,
 h3,
 p {
   margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--heading);
+}
+
+p,
+li,
+.muted-note {
+  color: var(--text);
 }
 
 h1 {

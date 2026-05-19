@@ -69,9 +69,9 @@
 
       <div class="blog-category-pills" aria-label="Blog categories">
         <button type="button" class="blog-category-pill is-active" data-category="">All</button>
-        <button type="button" class="blog-category-pill" data-category="Thoughts">Thoughts</button>
-        <button type="button" class="blog-category-pill" data-category="Articles">Articles</button>
-        <button type="button" class="blog-category-pill is-disabled" disabled>Whitepapers Soon</button>
+        <button type="button" class="blog-category-pill" data-category="Thoughts" data-label="Thoughts">Thoughts</button>
+        <button type="button" class="blog-category-pill" data-category="Articles" data-label="Articles">Articles</button>
+        <button type="button" class="blog-category-pill" data-category="Whitepapers" data-label="Whitepapers">Whitepapers</button>
       </div>
 
       <div class="blog-results-meta" id="results-meta">
@@ -161,6 +161,18 @@
           });
         }
 
+        function syncCategoryPills(posts) {
+          const publishedCategories = new Set(posts.map(post => post.category).filter(Boolean));
+          document.querySelectorAll('.blog-category-pill[data-label]').forEach(button => {
+            const category = button.dataset.category;
+            const label = button.dataset.label;
+            const available = publishedCategories.has(category);
+            button.disabled = !available;
+            button.classList.toggle('is-disabled', !available);
+            button.textContent = available ? label : `${label} Soon`;
+          });
+        }
+
         function applyFilters() {
           const category = document.getElementById('category-filter').value;
           const topic = document.getElementById('topic-filter').value;
@@ -236,6 +248,7 @@
             const res = await fetch('posts/index.json');
             allPosts = (await res.json()).filter(isPublished);
             allPosts.sort((a,b)=> b.date.localeCompare(a.date));
+            syncCategoryPills(allPosts);
             populateFilterOptions(allPosts);
             wireFilterEvents();
 
