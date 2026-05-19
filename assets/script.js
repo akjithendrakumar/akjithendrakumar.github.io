@@ -11,8 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (resumeAction && resumeNote) {
     applyResumeStatus(resumeAction, resumeNote);
   }
-
-  installNoCopyGuards();
 });
 
 async function applyResumeStatus(resumeAction, resumeNote) {
@@ -158,20 +156,4 @@ function normalizeResumeUrl(url) {
   } catch (error) {
     return url;
   }
-}
-
-function installNoCopyGuards() {
-  const blockIfContentTarget = (event) => {
-    const target = event.target;
-    if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) {
-      return;
-    }
-    event.preventDefault();
-  };
-
-  document.addEventListener("copy", blockIfContentTarget);
-  document.addEventListener("cut", blockIfContentTarget);
-  document.addEventListener("contextmenu", blockIfContentTarget);
-  document.addEventListener("dragstart", blockIfContentTarget);
-  document.addEventListener("selectstart", blockIfContentTarget);
 }
