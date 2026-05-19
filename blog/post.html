@@ -11,7 +11,7 @@
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="../">
-        <span class="brand-mark" aria-hidden="true">JK</span>
+        <span class="brand-mark" aria-hidden="true">J</span>
         <span class="brand-copy">
           <span class="brand-name">Jithendra Kumar</span>
           <span class="brand-meta">Cloud · DevOps · Platform</span>
@@ -73,6 +73,10 @@
       return params.get(name);
     }
 
+    function resolveBlogUrl(relativePath) {
+      return new URL(relativePath.replace(/^\//, ''), window.location.href).toString();
+    }
+
     function parsePublishDate(dateString) {
       if (!dateString) return null;
       const [year, month, day] = dateString.split('-').map(Number);
@@ -95,7 +99,7 @@
       try {
         let meta = null;
         try {
-          const listRes = await fetch('posts/index.json');
+          const listRes = await fetch(resolveBlogUrl('posts/index.json'));
           if (listRes.ok) {
             const posts = await listRes.json();
             meta = posts.find(p => p.src === src.replace(/^\//, '')) || posts.find(p => p.src === src);
@@ -108,10 +112,10 @@
           // ignore metadata errors and continue with markdown fetch fallback
         }
 
-        const res = await fetch(src);
+        const res = await fetch(resolveBlogUrl(src));
         if (!res.ok) throw new Error('Failed to fetch');
         const md = await res.text();
-        const html = marked.parse(md);
+        const html = window.marked ? marked.parse(md) : `<pre>${md.replace(/[&<>]/g, ch => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[ch]))}</pre>`;
         document.getElementById('post-content').innerHTML = html;
 
         if (meta) {
