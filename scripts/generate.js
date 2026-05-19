@@ -114,12 +114,12 @@ async function writeOgImagesAndResume(posts) {
     }
 
     const resumeHtml = `file://${path.join(ROOT, 'resume.html').replace(/\\/g, '/')}`;
-    const page = await browser.newPage();
-    await page.goto(resumeHtml, { waitUntil: 'networkidle0' });
+    const resumePage = await browser.newPage();
+    await resumePage.goto(resumeHtml, { waitUntil: 'networkidle0' });
     const outPdf = path.join(ROOT, 'assets', 'resume.pdf');
-    await page.pdf({ path: outPdf, format: 'A4', printBackground: true });
+    await resumePage.pdf({ path: outPdf, format: 'A4', printBackground: true });
     console.log('Wrote PDF', outPdf);
-    await page.close();
+    await resumePage.close();
   } finally {
     await browser.close();
   }

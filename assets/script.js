@@ -31,9 +31,9 @@ async function applyResumeStatus(resumeAction) {
         return;
       }
       resumeAction.href = url;
-      resumeAction.setAttribute("download", "");
-      resumeAction.removeAttribute("target");
-      resumeAction.removeAttribute("rel");
+      resumeAction.removeAttribute("download");
+      resumeAction.setAttribute("target", "_blank");
+      resumeAction.setAttribute("rel", "noopener noreferrer");
       clearResumePendingState(resumeAction);
       return;
     }
