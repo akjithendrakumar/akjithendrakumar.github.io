@@ -67,6 +67,18 @@
       return params.get(name);
     }
 
+    function parsePublishDate(dateString) {
+      if (!dateString) return null;
+      const [year, month, day] = dateString.split('-').map(Number);
+      if (!year || !month || !day) return null;
+      return new Date(year, month - 1, day, 0, 0, 0, 0);
+    }
+
+    function isPublished(post) {
+      const publishDate = parsePublishDate(post.date);
+      return !publishDate || Date.now() >= publishDate.getTime();
+    }
+
     async function loadPost() {
       const src = qs('src');
       if (!src) {
@@ -75,40 +87,45 @@
       }
 
       try {
+        let meta = null;
+        try {
+          const listRes = await fetch('posts/index.json');
+          if (listRes.ok) {
+            const posts = await listRes.json();
+            meta = posts.find(p => p.src === src.replace(/^\//, '')) || posts.find(p => p.src === src);
+            if (meta && !isPublished(meta)) {
+              document.getElementById('post-content').innerHTML = '<p>This post is scheduled and will be published at 12:00 AM on its publish date.</p>';
+              return;
+            }
+          }
+        } catch (inner) {
+          // ignore metadata errors and continue with markdown fetch fallback
+        }
+
         const res = await fetch(src);
         if (!res.ok) throw new Error('Failed to fetch');
         const md = await res.text();
         const html = marked.parse(md);
         document.getElementById('post-content').innerHTML = html;
 
-        // try to load post metadata from index.json to build share text
-        try {
-          const listRes = await fetch('posts/index.json');
-          if (listRes.ok) {
-            const posts = await listRes.json();
-            const meta = posts.find(p => p.src === src.replace(/^\//, '')) || posts.find(p=>p.src===src);
-            if (meta) {
-              document.getElementById('share-panel').style.display = 'block';
-              const pageUrl = window.location.href;
-              const hashtags = (meta.tags || []).map(t => `#${t.replace(/[^a-zA-Z0-9]/g,'')}`).join(' ');
-              const suggested = `${meta.title}\n\n${meta.excerpt}\n\nRead more: ${pageUrl}\n\n${hashtags}`;
-              document.getElementById('share-text').value = suggested;
-              document.getElementById('share-title').textContent = meta.title;
+        if (meta) {
+          document.getElementById('share-panel').style.display = 'block';
+          const pageUrl = window.location.href;
+          const hashtags = (meta.tags || []).map(t => `#${t.replace(/[^a-zA-Z0-9]/g,'')}`).join(' ');
+          const suggested = `${meta.title}\n\n${meta.excerpt}\n\nRead more: ${pageUrl}\n\n${hashtags}`;
+          document.getElementById('share-text').value = suggested;
+          document.getElementById('share-title').textContent = meta.title;
 
-              document.getElementById('open-linkedin').addEventListener('click', ()=>{
-                const shareUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(pageUrl);
-                window.open(shareUrl, '_blank', 'noopener');
-              });
+          document.getElementById('open-linkedin').addEventListener('click', ()=>{
+            const shareUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(pageUrl);
+            window.open(shareUrl, '_blank', 'noopener');
+          });
 
-              document.getElementById('copy-text').addEventListener('click', async ()=>{
-                const txt = document.getElementById('share-text').value;
-                try { await navigator.clipboard.writeText(txt); alert('Copied LinkedIn text to clipboard'); }
-                catch(e){ prompt('Copy the text below:', txt); }
-              });
-            }
-          }
-        } catch (inner) {
-          // ignore metadata errors
+          document.getElementById('copy-text').addEventListener('click', async ()=>{
+            const txt = document.getElementById('share-text').value;
+            try { await navigator.clipboard.writeText(txt); alert('Copied LinkedIn text to clipboard'); }
+            catch(e){ prompt('Copy the text below:', txt); }
+          });
         }
 
       } catch (e) {

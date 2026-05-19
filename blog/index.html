@@ -84,6 +84,18 @@
         let currentPage = 1;
         const pageSize = 6;
 
+        function parsePublishDate(dateString) {
+          if (!dateString) return null;
+          const [year, month, day] = dateString.split('-').map(Number);
+          if (!year || !month || !day) return null;
+          return new Date(year, month - 1, day, 0, 0, 0, 0);
+        }
+
+        function isPublished(post) {
+          const publishDate = parsePublishDate(post.date);
+          return !publishDate || Date.now() >= publishDate.getTime();
+        }
+
         function normalize(text) {
           return (text || '').toLowerCase().trim();
         }
@@ -216,7 +228,7 @@
         async function loadPosts() {
           try {
             const res = await fetch('posts/index.json');
-            allPosts = await res.json();
+            allPosts = (await res.json()).filter(isPublished);
             allPosts.sort((a,b)=> b.date.localeCompare(a.date));
             populateFilterOptions(allPosts);
             wireFilterEvents();
