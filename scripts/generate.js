@@ -10,7 +10,7 @@ async function main() {
   const ogDir = path.join(__dirname, '..', 'assets', 'og');
   await fs.ensureDir(ogDir);
 
-  const files = (await fs.readdir(postsDir)).filter(f => f.endsWith('.md'));
+  const files = await collectMarkdownFiles(postsDir);
   const posts = [];
 
   for (const file of files) {
@@ -20,15 +20,16 @@ async function main() {
     let title = parsed.data.title;
     if (!title) {
       const m = raw.match(/^#\s+(.+)$/m);
-      title = m ? m[1].trim() : file.replace(/\.md$/, '');
+      title = m ? m[1].trim() : path.basename(file, '.md');
     }
-    const date = parsed.data.date || inferDateFromFilename(file) || new Date().toISOString().slice(0,10);
+    const date = parsed.data.date || inferDateFromFilename(path.basename(file)) || new Date().toISOString().slice(0,10);
     const category = parsed.data.category || 'Articles';
     const tags = parsed.data.tags || [];
     const keywords = parsed.data.keywords || [];
     const excerpt = parsed.data.excerpt || extractExcerpt(parsed.content);
-    const src = `posts/${file}`;
-    posts.push({ title, date, category, tags, keywords, excerpt, src, url: `post.html?src=posts/${file}` });
+    const webPath = toWebPath(file);
+    const src = `posts/${webPath}`;
+    posts.push({ title, date, category, tags, keywords, excerpt, src, url: `post.html?src=posts/${webPath}` });
   }
 
   posts.sort((a,b)=> b.date.localeCompare(a.date));
@@ -73,9 +74,33 @@ async function main() {
   }
 }
 
+async function collectMarkdownFiles(rootDir, currentDir = rootDir) {
+  const entries = await fs.readdir(currentDir, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries) {
+    if (entry.name.startsWith('_') || entry.name.startsWith('.')) continue;
+
+    const absolutePath = path.join(currentDir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...await collectMarkdownFiles(rootDir, absolutePath));
+      continue;
+    }
+
+    if (!entry.isFile() || !entry.name.endsWith('.md')) continue;
+    files.push(path.relative(rootDir, absolutePath));
+  }
+
+  return files;
+}
+
 function inferDateFromFilename(file) {
   const m = file.match(/(\d{4}-\d{2}-\d{2})/);
   return m ? m[1] : null;
+}
+
+function toWebPath(file) {
+  return file.split(path.sep).join('/');
 }
 
 function extractExcerpt(content) {
