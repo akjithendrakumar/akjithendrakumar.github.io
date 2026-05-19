@@ -26,7 +26,10 @@ html {
 }
 
 body {
+  position: relative;
   margin: 0;
+  overflow-x: hidden;
+  isolation: isolate;
   font-family: "Inter", sans-serif;
   color: var(--text);
   background:
@@ -36,6 +39,46 @@ body {
     radial-gradient(circle at 24% 72%, rgba(236, 72, 153, 0.14), transparent 0 16%),
     linear-gradient(180deg, #0a0d1c 0%, #070b17 52%, #05070f 100%);
   line-height: 1.65;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+body::before {
+  background:
+    radial-gradient(circle at 8% 12%, rgba(255, 255, 255, 0.95) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 22% 28%, rgba(140, 230, 255, 0.9) 0 1.2px, transparent 1.7px),
+    radial-gradient(circle at 36% 18%, rgba(255, 255, 255, 0.72) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 54% 14%, rgba(155, 140, 255, 0.88) 0 1.3px, transparent 1.8px),
+    radial-gradient(circle at 66% 22%, rgba(255, 255, 255, 0.85) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 79% 17%, rgba(89, 215, 255, 0.78) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 91% 9%, rgba(255, 255, 255, 0.76) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 16% 58%, rgba(255, 255, 255, 0.7) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 29% 72%, rgba(89, 215, 255, 0.8) 0 1.1px, transparent 1.7px),
+    radial-gradient(circle at 47% 64%, rgba(255, 255, 255, 0.76) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 63% 78%, rgba(255, 255, 255, 0.72) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 76% 62%, rgba(155, 140, 255, 0.76) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 88% 70%, rgba(255, 255, 255, 0.9) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 72% 84%, rgba(89, 215, 255, 0.66) 0 180px, transparent 260px),
+    radial-gradient(circle at 14% 86%, rgba(168, 85, 247, 0.16) 0 120px, transparent 200px);
+  opacity: 0.9;
+  animation: starDrift 26s ease-in-out infinite alternate;
+}
+
+body::after {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1000'%3E%3Cg fill='none' stroke='%239fe8ff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='.38'%3E%3Cpath d='M1240 208c34-8 67 16 75 52 7 34-13 68-45 80-35 13-74-7-87-45-13-37 8-79 47-91 10-3 19-4 28-3'/%3E%3Cpath d='M1251 182l-12 18m66-2-17 13m18 43-22-4m-54 45 10-20m-311 418c16-5 34 4 40 20 6 17-2 36-18 44-17 8-39 0-48-18-9-19 0-42 20-51 2-1 4-2 6-2'/%3E%3Cpath d='M904 661l28 14m-3-40-13 23m50 14-25 5'/%3E%3C/g%3E%3Cg fill='rgba(255,255,255,.82)'%3E%3Ccircle cx='215' cy='138' r='2'/%3E%3Ccircle cx='298' cy='188' r='2'/%3E%3Ccircle cx='1425' cy='152' r='2'/%3E%3Ccircle cx='1310' cy='708' r='2'/%3E%3Ccircle cx='1104' cy='575' r='2'/%3E%3Ccircle cx='388' cy='776' r='2'/%3E%3C/g%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='4' stroke-linecap='round' stroke-linejoin='round' opacity='.24'%3E%3Cg transform='translate(190 615)'%3E%3Ccircle cx='38' cy='38' r='28'/%3E%3Cpath d='M16 38h44M38 66V98M24 96l14-26 14 26M20 16l-12-18M56 16l12-18'/%3E%3C/g%3E%3Cg transform='translate(1265 490)'%3E%3Crect x='20' y='22' width='32' height='20' rx='4'/%3E%3Cpath d='M0 32h20m32 0h22M28 10V0m16 10V0m-14 42v18m12-18v18'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+  opacity: 0.65;
+  animation: decalFloat 34s ease-in-out infinite alternate;
 }
 
 a {
@@ -699,3 +742,23 @@ h3 {
 
 /* Seamless/infinite scroll sentinel */
 .scroll-sentinel { height: 1px; }
+
+@keyframes starDrift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.76;
+  }
+  to {
+    transform: translate3d(0, -18px, 0) scale(1.02);
+    opacity: 1;
+  }
+}
+
+@keyframes decalFloat {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 14px, 0);
+  }
+}
