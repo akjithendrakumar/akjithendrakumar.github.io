@@ -332,6 +332,82 @@ h3 {
   cursor: not-allowed;
 }
 
+/* Resume modal */
+.modal-open {
+  overflow: hidden;
+}
+
+#resume-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 8, 20, 0.84);
+  backdrop-filter: blur(8px);
+}
+
+.modal-dialog {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: min(900px, 100%);
+  height: min(88vh, 1040px);
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.modal-title {
+  font-weight: 700;
+  color: var(--heading);
+  font-size: 1.05rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+#resume-modal iframe {
+  flex: 1;
+  width: 100%;
+  border: 0;
+  background: #fff;
+  display: block;
+  min-height: 0;
+}
+
+.modal-note {
+  padding: 0.5rem 1.25rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.8rem;
+  color: var(--muted);
+  flex-shrink: 0;
+  margin: 0;
+}
+
 .quick-facts,
 .todo-list,
 .tags {
