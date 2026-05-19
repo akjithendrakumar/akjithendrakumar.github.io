@@ -886,6 +886,73 @@ h3 {
 /* Seamless/infinite scroll sentinel */
 .scroll-sentinel { height: 1px; }
 
+@media print {
+  /* Hide everything that isn't resume content */
+  .site-header,
+  .sidebar,
+  .site-footer,
+  .resume-download-action,
+  #resume-modal {
+    display: none !important;
+  }
+
+  /* Remove sidebar offset so content fills the page */
+  .site-layout,
+  main {
+    padding-left: 0 !important;
+    min-height: auto !important;
+    display: block !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+    font-size: 11pt;
+    line-height: 1.55;
+  }
+
+  h2, h3 {
+    color: #000000 !important;
+  }
+
+  p, li, .muted-note, .section-kicker {
+    color: #333333 !important;
+  }
+
+  .section-kicker {
+    letter-spacing: 0.1em;
+    font-size: 8pt;
+  }
+
+  .section {
+    padding: 1.2rem 0 !important;
+  }
+
+  /* Cards: clean white with a light border */
+  .achievement-card,
+  .info-card,
+  .timeline-item,
+  .panel-card {
+    background: #f9f9f9 !important;
+    border: 1px solid #cccccc !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .card-grid.two-up {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+
+  /* Avoid page breaks inside cards */
+  .achievement-card,
+  .timeline-item {
+    break-inside: avoid;
+  }
+}
+
 @keyframes starDrift {
   from {
     transform: translate3d(0, 0, 0) scale(1);
