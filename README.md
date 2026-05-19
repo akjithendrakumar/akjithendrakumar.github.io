@@ -18,13 +18,18 @@ Adding posts
 - Add a Markdown file under `blog/posts/` and append a metadata entry to `blog/posts/index.json` with `title`, `date` (YYYY-MM-DD), `src` (path), `excerpt`, `tags` (array), and `url`.
 - The `post.html` viewer will use that metadata to prefill share text and list posts on `blog/index.html`.
 
- Workflows and PAT setup
-- If your organization or repo restricts `GITHUB_TOKEN` push permissions, create a Personal Access Token (PAT) with `repo` scope.
-- Add the PAT to the repository secrets (Settings → Secrets → Actions) with the name `REPO_PAT` (used for committing generated files) and `DEPLOY_PAT` (used for deploying to Pages).
-- The generator workflow uses `REPO_PAT` to push regenerated `index.json`, `rss.xml`, `assets/og/`, and `assets/resume.pdf` back to `main`.
-- The Pages deploy workflow uses `DEPLOY_PAT` to publish to the `gh-pages` branch.
+Workflows and PAT setup
+- Use a fine-grained GitHub token for best security.
+- Create a token with access to only this repository (`akjithendrakumar/akjithendrakumar.github.io`).
+- Required repository permissions:
+  - Contents: Read & write
+  - Pages: Read & write
+  - Actions / Workflows: Read & write (optional only if workflow metadata or workflow run management is needed)
+- Set a reasonable expiration, then copy the token once.
+- Add the token as a single repository secret named `REPO_PAT` (Settings → Secrets and variables → Actions → New repository secret).
+- Both workflows use `REPO_PAT`: the generator workflow commits generated files back to `main`, and the Pages deploy workflow publishes to `gh-pages`.
 
- Important: keep the PAT secret safe and rotate it if compromised. If you prefer, you can instead allow `GITHUB_TOKEN` pushes in your organization settings.
+Important: keep the PAT secret safe and rotate it if compromised. If you prefer not to use a PAT, you can instead allow `GITHUB_TOKEN` push access on the repository or organization settings.
 Deployment
 - A GitHub Action (`.github/workflows/deploy.yml`) deploys the repo contents to the `gh-pages` branch when you push to `main`.
 - To enable Pages, go to repository Settings → Pages and select `gh-pages` branch as the source.

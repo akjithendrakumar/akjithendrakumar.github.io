@@ -18,6 +18,6 @@ jobs:
       - name: Deploy to gh-pages (using PAT)
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.DEPLOY_PAT }}
+          personal_token: ${{ secrets.REPO_PAT }}
           publish_dir: ./
           publish_branch: gh-pages
