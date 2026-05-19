@@ -126,7 +126,7 @@
             const tagList = (p.tags || []).map(tag => `<span>${tag}</span>`).join('');
             article.innerHTML = `
               <p class="panel-label">${p.category || 'Articles'}</p>
-              <h3><a href="post.html?src=${encodeURIComponent(p.src)}">${p.title}</a></h3>
+              <h3><a href="${p.url}">${p.title}</a></h3>
               <p class="muted-note">${p.date} · ${(p.tags || []).join(', ') || 'General'}</p>
               <p class="hero-copy">${p.excerpt}</p>
               <div class="tags">${tagList}</div>

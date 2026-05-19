@@ -5,7 +5,8 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: "5 * * * *"
+    - cron: "0 7 * * *"
+    - cron: "0 8 * * *"
 
 concurrency:
   group: github-pages
@@ -23,15 +24,41 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      should_deploy: ${{ steps.schedule-gate.outputs.should_run }}
     steps:
+      - name: Check midnight Pacific schedule window
+        id: schedule-gate
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            echo "Non-scheduled trigger: proceeding"
+            exit 0
+          fi
+
+          local_now=$(TZ=America/Los_Angeles date '+%Y-%m-%d %H:%M')
+          local_time=$(TZ=America/Los_Angeles date '+%H:%M')
+          echo "Local Pacific time: ${local_now}"
+
+          if [ "${local_time}" = "00:00" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            echo "Scheduled run is inside the midnight Pacific window"
+          else
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping scheduled run outside the midnight Pacific window"
+          fi
+
       - name: Checkout
+        if: steps.schedule-gate.outputs.should_run == 'true'
         uses: actions/checkout@v5
 
       - name: Configure Pages
+        if: steps.schedule-gate.outputs.should_run == 'true'
         uses: actions/configure-pages@v5
 
       - name: Cache Puppeteer browser
         id: cache-puppeteer
+        if: steps.schedule-gate.outputs.should_run == 'true'
         uses: actions/cache@v4
         with:
           path: ~/.cache/puppeteer
@@ -40,12 +67,14 @@ jobs:
             ${{ runner.os }}-puppeteer-
 
       - name: Setup Node
+        if: steps.schedule-gate.outputs.should_run == 'true'
         uses: actions/setup-node@v5
         with:
           node-version: "24"
           cache: "npm"
 
       - name: Log cache status
+        if: steps.schedule-gate.outputs.should_run == 'true'
         run: |
           echo "Puppeteer cache hit: ${{ steps.cache-puppeteer.outputs.cache-hit }}"
           echo "npm cache enabled through actions/setup-node"
@@ -53,6 +82,7 @@ jobs:
           npm --version
 
       - name: Install dependencies
+        if: steps.schedule-gate.outputs.should_run == 'true'
         run: |
           start_ts=$(date +%s)
           npm ci
@@ -60,6 +90,7 @@ jobs:
           echo "npm ci duration: $((end_ts - start_ts))s"
 
       - name: Run generator
+        if: steps.schedule-gate.outputs.should_run == 'true'
         run: |
           start_ts=$(date +%s)
           npm run generate
@@ -67,6 +98,7 @@ jobs:
           echo "generate duration: $((end_ts - start_ts))s"
 
       - name: Stage site artifact
+        if: steps.schedule-gate.outputs.should_run == 'true'
         run: |
           rm -rf _site
           mkdir -p _site
@@ -79,13 +111,17 @@ jobs:
             --exclude 'package-lock.json' \
             --exclude 'README.md' \
             ./ _site/
+          find _site/blog/posts -name '*.md' -delete
+          rm -rf _site/blog/posts/_templates
 
       - name: Upload Pages artifact
+        if: steps.schedule-gate.outputs.should_run == 'true'
         uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
   deploy:
+    if: needs.build.outputs.should_deploy == 'true'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
