@@ -160,7 +160,6 @@ function createResumeModal() {
   modal.setAttribute("role", "dialog");
   modal.setAttribute("aria-modal", "true");
   modal.setAttribute("aria-label", "Resume preview");
-  modal.hidden = true;
   modal.innerHTML = `
     <div class="modal-backdrop"></div>
     <div class="modal-dialog">
@@ -180,7 +179,7 @@ function createResumeModal() {
   modal.querySelector(".modal-backdrop").addEventListener("click", closeResumeModal);
   modal.querySelector("#modal-close-btn").addEventListener("click", closeResumeModal);
   document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && !modal.hidden) closeResumeModal();
+    if (e.key === "Escape" && modal.classList.contains("is-open")) closeResumeModal();
   });
 
   return modal;
@@ -188,21 +187,44 @@ function createResumeModal() {
 
 function openResumeModal(url) {
   const modal = createResumeModal();
-  document.getElementById("modal-frame").src = url;
+  const frame = document.getElementById("modal-frame");
+  if (frame.src !== url) frame.src = url;
   const dlBtn = document.getElementById("modal-download-btn");
   dlBtn.href = url;
   dlBtn.setAttribute("download", "Jithendra-Kumar-Resume.pdf");
-  modal.hidden = false;
+  modal.classList.add("is-open");
   document.body.classList.add("modal-open");
+  // Push a dedicated history entry so Close/back returns here rather than leaving the site
+  history.pushState({ resumeModal: true }, "", location.href);
 }
+
 
 function closeResumeModal() {
   const modal = document.getElementById("resume-modal");
-  if (!modal) return;
-  document.getElementById("modal-frame").src = "";
-  modal.hidden = true;
+  if (!modal || !modal.classList.contains("is-open")) return;
+  // Hide first — then clear iframe so there is no flash of blank
+  modal.classList.remove("is-open");
   document.body.classList.remove("modal-open");
+  requestAnimationFrame(() => {
+    const frame = document.getElementById("modal-frame");
+    if (frame) frame.src = "";
+  });
+  // Pop the history entry that was pushed when the modal opened
+  if (history.state && history.state.resumeModal) history.back();
 }
+
+// Browser back button while modal is open should close the modal, not navigate away
+window.addEventListener("popstate", e => {
+  const modal = document.getElementById("resume-modal");
+  if (modal && modal.classList.contains("is-open") && !(e.state && e.state.resumeModal)) {
+    modal.classList.remove("is-open");
+    document.body.classList.remove("modal-open");
+    requestAnimationFrame(() => {
+      const frame = document.getElementById("modal-frame");
+      if (frame) frame.src = "";
+    });
+  }
+});
 
 // ---------------------------------------------------------------------------
 // Resume status
