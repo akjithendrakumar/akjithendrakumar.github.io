@@ -1,6 +1,5 @@
 {
   "mode": "local",
   "url": "assets/resume.pdf",
-  "label": "Download PDF",
-  "message": "Use the button below to access the latest resume whenever it is available."
+  "label": "Download PDF"
 }
