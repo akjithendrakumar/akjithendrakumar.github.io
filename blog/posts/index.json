@@ -1,0 +1,64 @@
+[{
+  "title": "Introducing the blog",
+  "date": "2026-05-18",
+  "src": "posts/2026-05-18-sample-post.md",
+  "excerpt": "A quick test post to demonstrate blog structure in the portfolio site.",
+  "tags": ["announcement","sample"],
+  "url": "post.html?src=posts/2026-05-18-sample-post.md"
+},
+{
+  "title": "Modern CI/CD patterns for reliable delivery",
+  "date": "2026-05-19",
+  "src": "posts/2026-05-19-deep-dive-ci-cd.md",
+  "excerpt": "Practical CI/CD patterns: ephemeral runners, pipeline-as-code, and gated releases.",
+  "tags": ["ci/cd","devops","technical"],
+  "url": "post.html?src=posts/2026-05-19-deep-dive-ci-cd.md"
+},
+{
+  "title": "Reflections on platform engineering as a career",
+  "date": "2026-05-20",
+  "src": "posts/2026-05-20-reflections-on-career.md",
+  "excerpt": "Non-technical reflections on platform engineering, product thinking, and career choices.",
+  "tags": ["career","reflection","non-technical"],
+  "url": "post.html?src=posts/2026-05-20-reflections-on-career.md"
+}]
+{
+  "title": "CI/CD modernization: real-world case study",
+  "date": "2026-05-21",
+  "src": "posts/2026-05-21-ci-cd-modernization.md",
+  "excerpt": "Case study: migrating to pipeline-as-code, ephemeral runners, and gated releases.",
+  "tags": ["ci/cd","case-study","devops"],
+  "url": "post.html?src=posts/2026-05-21-ci-cd-modernization.md"
+},
+{
+  "title": "Building reusable cloud foundations with Terraform",
+  "date": "2026-05-22",
+  "src": "posts/2026-05-22-reusable-cloud-foundations.md",
+  "excerpt": "How to design versioned Terraform modules for secure, repeatable cloud foundations.",
+  "tags": ["terraform","cloud","infrastructure"],
+  "url": "post.html?src=posts/2026-05-22-reusable-cloud-foundations.md"
+},
+{
+  "title": "Enabling MLOps: pipelines, validation, and model lifecycle",
+  "date": "2026-05-23",
+  "src": "posts/2026-05-23-mlops-enablement.md",
+  "excerpt": "Practical MLOps patterns: reproducible training, validation gates, and model registries.",
+  "tags": ["mlops","ai","modelops"],
+  "url": "post.html?src=posts/2026-05-23-mlops-enablement.md"
+},
+{
+  "title": "AI guardrails and cost controls for production systems",
+  "date": "2026-05-24",
+  "src": "posts/2026-05-24-ai-guardrails-and-cost-controls.md",
+  "excerpt": "Strategies for rate limiting, caching, fallback routing, and observability for AI systems.",
+  "tags": ["ai","costs","guardrails"],
+  "url": "post.html?src=posts/2026-05-24-ai-guardrails-and-cost-controls.md"
+},
+{
+  "title": "Career paths: platform engineering and product thinking",
+  "date": "2026-05-25",
+  "src": "posts/2026-05-25-career-paths-platform-engineering.md",
+  "excerpt": "Advice on treating platforms as products and measuring developer experience outcomes.",
+  "tags": ["career","platform","product"],
+  "url": "post.html?src=posts/2026-05-25-career-paths-platform-engineering.md"
+}

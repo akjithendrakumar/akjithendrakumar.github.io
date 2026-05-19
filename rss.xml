@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Jithendra Kumar — Blog</title>
+    <link>https://akjithendrakumar.github.io/</link>
+    <description>Blog posts about cloud architecture, DevOps, and MLOps.</description>
+    <lastBuildDate>Tue, 18 May 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Introducing the blog</title>
+      <link>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-18-sample-post.md</link>
+      <pubDate>Tue, 18 May 2026 00:00:00 +0000</pubDate>
+      <description>A quick test post to demonstrate blog structure in the portfolio site.</description>
+      <guid>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-18-sample-post.md</guid>
+    </item>
+    <item>
+      <title>Modern CI/CD patterns for reliable delivery</title>
+      <link>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-19-deep-dive-ci-cd.md</link>
+      <pubDate>Wed, 19 May 2026 00:00:00 +0000</pubDate>
+      <description>Practical CI/CD patterns: ephemeral runners, pipeline-as-code, and gated releases.</description>
+      <guid>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-19-deep-dive-ci-cd.md</guid>
+    </item>
+    <item>
+      <title>Reflections on platform engineering as a career</title>
+      <link>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-20-reflections-on-career.md</link>
+      <pubDate>Thu, 20 May 2026 00:00:00 +0000</pubDate>
+      <description>Non-technical reflections on platform engineering, product thinking, and career choices.</description>
+      <guid>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-20-reflections-on-career.md</guid>
+    </item>
+    <item>
+      <title>CI/CD modernization: real-world case study</title>
+      <link>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-21-ci-cd-modernization.md</link>
+      <pubDate>Fri, 21 May 2026 00:00:00 +0000</pubDate>
+      <description>Case study: migrating to pipeline-as-code, ephemeral runners, and gated releases.</description>
+      <guid>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-21-ci-cd-modernization.md</guid>
+    </item>
+    <item>
+      <title>Building reusable cloud foundations with Terraform</title>
+      <link>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-22-reusable-cloud-foundations.md</link>
+      <pubDate>Sat, 22 May 2026 00:00:00 +0000</pubDate>
+      <description>How to design versioned Terraform modules for secure, repeatable cloud foundations.</description>
+      <guid>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-22-reusable-cloud-foundations.md</guid>
+    </item>
+    <item>
+      <title>Enabling MLOps: pipelines, validation, and model lifecycle</title>
+      <link>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-23-mlops-enablement.md</link>
+      <pubDate>Sun, 23 May 2026 00:00:00 +0000</pubDate>
+      <description>Practical MLOps patterns: reproducible training, validation gates, and model registries.</description>
+      <guid>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-23-mlops-enablement.md</guid>
+    </item>
+    <item>
+      <title>AI guardrails and cost controls for production systems</title>
+      <link>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-24-ai-guardrails-and-cost-controls.md</link>
+      <pubDate>Mon, 24 May 2026 00:00:00 +0000</pubDate>
+      <description>Strategies for rate limiting, caching, fallback routing, and observability for AI systems.</description>
+      <guid>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-24-ai-guardrails-and-cost-controls.md</guid>
+    </item>
+    <item>
+      <title>Career paths: platform engineering and product thinking</title>
+      <link>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-25-career-paths-platform-engineering.md</link>
+      <pubDate>Tue, 25 May 2026 00:00:00 +0000</pubDate>
+      <description>Advice on treating platforms as products and measuring developer experience outcomes.</description>
+      <guid>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026-05-25-career-paths-platform-engineering.md</guid>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — Jithendra Kumar</title>
+  <meta name="description" content="Blog posts about cloud architecture, DevOps, and MLOps." />
+  <link href="../assets/styles.css" rel="stylesheet" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="../">Jithendra Kumar</a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="../">Home</a>
+        <a href="../#about">About</a>
+        <a href="../#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="section-heading narrow">
+        <p class="section-kicker">Blog</p>
+        <h2>Recent posts</h2>
+        <p>Thoughts on cloud platforms, CI/CD, MLOps, and practical lessons from platform engineering.</p>
+      </div>
+
+      <div style="margin-bottom:1rem; display:flex; gap:1rem; align-items:center; flex-wrap:wrap">
+        <label style="color:var(--muted); font-weight:700">Filter:</label>
+        <select id="tag-filter">
+          <option value="">All</option>
+        </select>
+        <input id="search-input" type="search" placeholder="Search posts" style="padding:0.6rem 0.8rem; border-radius:8px; border:1px solid var(--line);" />
+        <a class="btn btn-secondary" href="/rss.xml">RSS</a>
+      </div>
+
+      <div class="card-grid two-up" id="posts-list">
+        <!-- Posts will be rendered here -->
+      </div>
+
+      <div style="display:flex; justify-content:center; margin-top:1rem; gap:1rem; align-items:center;">
+        <button id="prev-page" class="btn btn-secondary">Previous</button>
+        <span id="page-info" style="color:var(--muted)"></span>
+        <button id="next-page" class="btn btn-secondary">Next</button>
+      </div>
+
+      <script>
+        let allPosts = [];
+        let filtered = [];
+        let currentPage = 1;
+        const pageSize = 5;
+
+        function paginate(list, page) {
+          const start = (page - 1) * pageSize;
+          return list.slice(start, start + pageSize);
+        }
+
+        function render(list) {
+          const container = document.getElementById('posts-list');
+          container.innerHTML = '';
+          if (!list.length) {
+            container.innerHTML = '<p class="muted-note">No posts found.</p>';
+            return;
+          }
+          for (const p of list) {
+            const article = document.createElement('article');
+            article.className = 'achievement-card';
+            article.innerHTML = `
+              <h3><a href="post.html?src=${encodeURIComponent(p.src)}">${p.title}</a></h3>
+              <p class="muted-note">${p.date} — ${p.tags.join(', ')}</p>
+              <p class="hero-copy">${p.excerpt}</p>
+            `;
+            container.appendChild(article);
+          }
+        }
+
+        function updatePageInfo() {
+          const pageInfo = document.getElementById('page-info');
+          const total = Math.max(1, Math.ceil(filtered.length / pageSize));
+          pageInfo.textContent = `Page ${currentPage} of ${total}`;
+          document.getElementById('prev-page').disabled = currentPage <= 1;
+          document.getElementById('next-page').disabled = currentPage >= total;
+        }
+
+        function applyFilters() {
+          const tag = document.getElementById('tag-filter').value;
+          const q = document.getElementById('search-input').value.trim().toLowerCase();
+          filtered = allPosts.filter(p => {
+            if (tag && !p.tags.includes(tag)) return false;
+            if (!q) return true;
+            const hay = (p.title + ' ' + p.excerpt + ' ' + p.tags.join(' ')).toLowerCase();
+            return hay.includes(q);
+          });
+          currentPage = 1;
+          render(paginate(filtered, currentPage));
+          updatePageInfo();
+        }
+
+        async function loadPosts() {
+          try {
+            const res = await fetch('posts/index.json');
+            allPosts = await res.json();
+            // sort by date desc
+            allPosts.sort((a,b)=> b.date.localeCompare(a.date));
+            const tagSet = new Set();
+            allPosts.forEach(p=>p.tags.forEach(t=>tagSet.add(t)));
+
+            const filter = document.getElementById('tag-filter');
+            for (const t of Array.from(tagSet).sort()) {
+              const opt = document.createElement('option');
+              opt.value = t;
+              opt.textContent = t;
+              filter.appendChild(opt);
+            }
+
+            document.getElementById('search-input').addEventListener('input', () => applyFilters());
+            filter.addEventListener('change', () => applyFilters());
+            document.getElementById('prev-page').addEventListener('click', ()=>{ if(currentPage>1){currentPage--; render(paginate(filtered,currentPage)); updatePageInfo();}});
+            document.getElementById('next-page').addEventListener('click', ()=>{ const total = Math.ceil(filtered.length/pageSize); if(currentPage<total){currentPage++; render(paginate(filtered,currentPage)); updatePageInfo();}});
+
+            // initial
+            filtered = allPosts;
+            render(paginate(filtered, currentPage));
+            updatePageInfo();
+          } catch (e) {
+            document.getElementById('posts-list').innerText = 'Unable to load posts.';
+          }
+        }
+        document.addEventListener('DOMContentLoaded', loadPosts);
+      </script>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>© <span id="year"></span> Jithendra Kumar. Built for GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script src="../assets/script.js"></script>
+</body>
+</html>
