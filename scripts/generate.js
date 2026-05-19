@@ -23,10 +23,12 @@ async function main() {
       title = m ? m[1].trim() : file.replace(/\.md$/, '');
     }
     const date = parsed.data.date || inferDateFromFilename(file) || new Date().toISOString().slice(0,10);
+    const category = parsed.data.category || 'Articles';
     const tags = parsed.data.tags || [];
+    const keywords = parsed.data.keywords || [];
     const excerpt = parsed.data.excerpt || extractExcerpt(parsed.content);
     const src = `posts/${file}`;
-    posts.push({ title, date, tags, excerpt, src, url: `post.html?src=posts/${file}` });
+    posts.push({ title, date, category, tags, keywords, excerpt, src, url: `post.html?src=posts/${file}` });
   }
 
   posts.sort((a,b)=> b.date.localeCompare(a.date));

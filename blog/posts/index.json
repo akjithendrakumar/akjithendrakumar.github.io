@@ -1,65 +1,253 @@
 [
   {
+    "title": "Learning never stops in engineering",
+    "date": "2026-05-31",
+    "category": "Thoughts",
+    "tags": [
+      "learning",
+      "career growth",
+      "platform engineering"
+    ],
+    "keywords": [
+      "upskilling",
+      "adaptability",
+      "ai"
+    ],
+    "excerpt": "Engineering stays interesting because learning never really stops, whether it happens in a course, a document, or a production issue.",
+    "src": "posts/2026-05-31-learning-never-stops-in-engineering.md",
+    "url": "post.html?src=posts/2026-05-31-learning-never-stops-in-engineering.md"
+  },
+  {
+    "title": "The best platforms feel simple",
+    "date": "2026-05-30",
+    "category": "Thoughts",
+    "tags": [
+      "platform engineering",
+      "developer experience",
+      "simplicity"
+    ],
+    "keywords": [
+      "documentation",
+      "reusable tools",
+      "secure defaults"
+    ],
+    "excerpt": "Simple platform experiences usually come from thoughtful engineering, not from a lack of complexity under the hood.",
+    "src": "posts/2026-05-30-the-best-platforms-feel-simple.md",
+    "url": "post.html?src=posts/2026-05-30-the-best-platforms-feel-simple.md"
+  },
+  {
+    "title": "Reliability is a form of trust",
+    "date": "2026-05-29",
+    "category": "Thoughts",
+    "tags": [
+      "reliability",
+      "trust",
+      "devops"
+    ],
+    "keywords": [
+      "observability",
+      "incident response",
+      "platform engineering"
+    ],
+    "excerpt": "Reliable systems create trust for teams, customers, and the business long before anyone calls it out explicitly.",
+    "src": "posts/2026-05-29-reliability-is-a-form-of-trust.md",
+    "url": "post.html?src=posts/2026-05-29-reliability-is-a-form-of-trust.md"
+  },
+  {
+    "title": "Automation is not about replacing people",
+    "date": "2026-05-28",
+    "category": "Thoughts",
+    "tags": [
+      "automation",
+      "platform engineering",
+      "productivity"
+    ],
+    "keywords": [
+      "engineering culture",
+      "human judgment",
+      "time back"
+    ],
+    "excerpt": "The best automation does not remove people from the process. It removes unnecessary friction from the process.",
+    "src": "posts/2026-05-28-automation-is-not-about-replacing-people.md",
+    "url": "post.html?src=posts/2026-05-28-automation-is-not-about-replacing-people.md"
+  },
+  {
+    "title": "Good engineering is not always about building more",
+    "date": "2026-05-27",
+    "category": "Thoughts",
+    "tags": [
+      "platform engineering",
+      "simplicity",
+      "developer experience"
+    ],
+    "keywords": [
+      "friction reduction",
+      "engineering leadership",
+      "consistency"
+    ],
+    "excerpt": "Good engineering often creates value by simplifying systems, reducing friction, and helping teams focus on what matters.",
+    "src": "posts/2026-05-27-good-engineering-is-not-always-about-building-more.md",
+    "url": "post.html?src=posts/2026-05-27-good-engineering-is-not-always-about-building-more.md"
+  },
+  {
+    "title": "The invisible work behind smooth experiences",
+    "date": "2026-05-26",
+    "category": "Thoughts",
+    "tags": [
+      "platform engineering",
+      "reliability",
+      "automation"
+    ],
+    "keywords": [
+      "developer experience",
+      "operations",
+      "continuous improvement"
+    ],
+    "excerpt": "Smooth digital experiences are often powered by invisible engineering work that removes friction before anyone notices it.",
+    "src": "posts/2026-05-26-the-invisible-work-behind-smooth-experiences.md",
+    "url": "post.html?src=posts/2026-05-26-the-invisible-work-behind-smooth-experiences.md"
+  },
+  {
     "title": "Career paths: platform engineering and product thinking",
     "date": "2026-05-25",
-    "tags": [],
-    "excerpt": "May 25, 2026",
+    "category": "Thoughts",
+    "tags": [
+      "career",
+      "platform engineering",
+      "product thinking"
+    ],
+    "keywords": [
+      "engineering leadership",
+      "developer experience",
+      "growth"
+    ],
+    "excerpt": "Platform engineering benefits from product thinking because the work succeeds only when it improves how other teams build and operate.",
     "src": "posts/2026-05-25-career-paths-platform-engineering.md",
     "url": "post.html?src=posts/2026-05-25-career-paths-platform-engineering.md"
   },
   {
     "title": "AI guardrails and cost controls for production systems",
     "date": "2026-05-24",
-    "tags": [],
-    "excerpt": "May 24, 2026",
+    "category": "Articles",
+    "tags": [
+      "ai",
+      "guardrails",
+      "cost optimization"
+    ],
+    "keywords": [
+      "rate limiting",
+      "fallback routing",
+      "prompt governance"
+    ],
+    "excerpt": "Production AI systems need both guardrails and cost controls to stay reliable, safe, and financially sustainable.",
     "src": "posts/2026-05-24-ai-guardrails-and-cost-controls.md",
     "url": "post.html?src=posts/2026-05-24-ai-guardrails-and-cost-controls.md"
   },
   {
     "title": "Enabling MLOps: pipelines, validation, and model lifecycle",
     "date": "2026-05-23",
-    "tags": [],
-    "excerpt": "May 23, 2026",
+    "category": "Articles",
+    "tags": [
+      "mlops",
+      "machine learning",
+      "model operations"
+    ],
+    "keywords": [
+      "validation",
+      "deployment",
+      "lifecycle management"
+    ],
+    "excerpt": "MLOps is less about isolated tooling and more about reliable pipelines, validation, and repeatable model operations.",
     "src": "posts/2026-05-23-mlops-enablement.md",
     "url": "post.html?src=posts/2026-05-23-mlops-enablement.md"
   },
   {
     "title": "Building reusable cloud foundations with Terraform",
     "date": "2026-05-22",
-    "tags": [],
-    "excerpt": "May 22, 2026",
+    "category": "Articles",
+    "tags": [
+      "terraform",
+      "cloud architecture",
+      "infrastructure as code"
+    ],
+    "keywords": [
+      "reusable modules",
+      "governance",
+      "landing zones"
+    ],
+    "excerpt": "Reusable Terraform foundations make cloud provisioning more consistent, governed, and easier to scale across teams.",
     "src": "posts/2026-05-22-reusable-cloud-foundations.md",
     "url": "post.html?src=posts/2026-05-22-reusable-cloud-foundations.md"
   },
   {
     "title": "CI/CD modernization: real-world case study",
     "date": "2026-05-21",
-    "tags": [],
-    "excerpt": "May 21, 2026",
+    "category": "Articles",
+    "tags": [
+      "ci/cd",
+      "modernization",
+      "github actions"
+    ],
+    "keywords": [
+      "delivery transformation",
+      "pipeline design",
+      "release controls"
+    ],
+    "excerpt": "A real-world modernization story focused on moving delivery systems toward stronger automation, controls, and repeatability.",
     "src": "posts/2026-05-21-ci-cd-modernization.md",
     "url": "post.html?src=posts/2026-05-21-ci-cd-modernization.md"
   },
   {
     "title": "Reflections on platform engineering as a career",
     "date": "2026-05-20",
-    "tags": [],
-    "excerpt": "May 20, 2026",
+    "category": "Thoughts",
+    "tags": [
+      "platform engineering",
+      "career",
+      "learning"
+    ],
+    "keywords": [
+      "growth",
+      "engineering mindset",
+      "adaptability"
+    ],
+    "excerpt": "A short reflection on platform engineering as a career path and the mindset required to keep growing with the work.",
     "src": "posts/2026-05-20-reflections-on-career.md",
     "url": "post.html?src=posts/2026-05-20-reflections-on-career.md"
   },
   {
     "title": "Modern CI/CD patterns for reliable delivery",
     "date": "2026-05-19",
-    "tags": [],
-    "excerpt": "May 19, 2026",
+    "category": "Articles",
+    "tags": [
+      "ci/cd",
+      "devops",
+      "delivery"
+    ],
+    "keywords": [
+      "pipelines",
+      "release engineering",
+      "ephemeral runners"
+    ],
+    "excerpt": "A practical look at enterprise CI/CD patterns such as pipeline isolation, gated promotion, and safer release workflows.",
     "src": "posts/2026-05-19-deep-dive-ci-cd.md",
     "url": "post.html?src=posts/2026-05-19-deep-dive-ci-cd.md"
   },
   {
     "title": "Introducing the blog",
     "date": "2026-05-18",
-    "tags": [],
-    "excerpt": "May 18, 2026",
+    "category": "Thoughts",
+    "tags": [
+      "platform engineering",
+      "writing",
+      "portfolio"
+    ],
+    "keywords": [
+      "introduction",
+      "blog",
+      "reflections"
+    ],
+    "excerpt": "A short introduction to the blog and the kinds of platform engineering, cloud, and MLOps topics it will cover.",
     "src": "posts/2026-05-18-sample-post.md",
     "url": "post.html?src=posts/2026-05-18-sample-post.md"
   }

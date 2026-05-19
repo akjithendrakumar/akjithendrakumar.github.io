@@ -37,16 +37,39 @@
       <div class="section-heading narrow">
         <p class="section-kicker">Blog</p>
         <h2>Recent posts</h2>
-        <p>Thoughts on cloud platforms, CI/CD, MLOps, and practical lessons from platform engineering.</p>
+        <p>Short thoughts, technical articles, and future long-form whitepapers on platform engineering, cloud, CI/CD, MLOps, and AI systems.</p>
       </div>
 
-      <div style="margin-bottom:1rem; display:flex; gap:1rem; align-items:center; flex-wrap:wrap">
-        <label style="color:var(--muted); font-weight:700">Filter:</label>
-        <select id="tag-filter">
-          <option value="">All</option>
-        </select>
-        <input id="search-input" type="search" placeholder="Search posts" style="padding:0.6rem 0.8rem; border-radius:8px; border:1px solid var(--line);" />
+      <div class="blog-filter-bar">
+        <div class="blog-filter-row">
+          <label class="blog-filter-label" for="category-filter">Type</label>
+          <select id="category-filter" class="blog-filter-input">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="blog-filter-row">
+          <label class="blog-filter-label" for="topic-filter">Topic</label>
+          <select id="topic-filter" class="blog-filter-input">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="blog-filter-row blog-filter-row-grow">
+          <label class="blog-filter-label" for="search-input">Search</label>
+          <input id="search-input" class="blog-filter-input" type="search" list="blog-dictionary" placeholder="Search by title, topic, keyword, or phrase" />
+          <datalist id="blog-dictionary"></datalist>
+        </div>
         <a class="btn btn-secondary" href="/rss.xml">RSS</a>
+      </div>
+
+      <div class="blog-category-pills" aria-label="Blog categories">
+        <button type="button" class="blog-category-pill is-active" data-category="">All</button>
+        <button type="button" class="blog-category-pill" data-category="Thoughts">Thoughts</button>
+        <button type="button" class="blog-category-pill" data-category="Articles">Articles</button>
+        <button type="button" class="blog-category-pill is-disabled" disabled>Whitepapers Soon</button>
+      </div>
+
+      <div class="blog-results-meta" id="results-meta">
+        <span>Loading posts...</span>
       </div>
 
       <div class="card-grid two-up" id="posts-list">
@@ -59,68 +82,145 @@
         let allPosts = [];
         let filtered = [];
         let currentPage = 1;
-        const pageSize = 5;
+        const pageSize = 6;
+
+        function normalize(text) {
+          return (text || '').toLowerCase().trim();
+        }
 
         function paginate(list, page) {
           const start = (page - 1) * pageSize;
           return list.slice(start, start + pageSize);
         }
 
-        function render(list) {
+        function render(list, append = false) {
           const container = document.getElementById('posts-list');
-          container.innerHTML = '';
-          if (!list.length) {
-            container.innerHTML = '<p class="muted-note">No posts found.</p>';
+          if (!append) container.innerHTML = '';
+
+          if (!append && !list.length) {
+            container.innerHTML = '<p class="muted-note">No posts found for the current filters.</p>';
             return;
           }
+
           for (const p of list) {
             const article = document.createElement('article');
             article.className = 'achievement-card';
+            const tagList = (p.tags || []).map(tag => `<span>${tag}</span>`).join('');
             article.innerHTML = `
+              <p class="panel-label">${p.category || 'Articles'}</p>
               <h3><a href="post.html?src=${encodeURIComponent(p.src)}">${p.title}</a></h3>
-              <p class="muted-note">${p.date} — ${p.tags.join(', ')}</p>
+              <p class="muted-note">${p.date} · ${(p.tags || []).join(', ') || 'General'}</p>
               <p class="hero-copy">${p.excerpt}</p>
+              <div class="tags">${tagList}</div>
             `;
             container.appendChild(article);
           }
         }
 
-        function updatePageInfo() { /* no-op for infinite scroll */ }
+        function updatePageInfo() {
+          const meta = document.getElementById('results-meta');
+          const topic = document.getElementById('topic-filter').value;
+          const category = document.getElementById('category-filter').value;
+          const q = document.getElementById('search-input').value.trim();
+          const filters = [category, topic, q].filter(Boolean);
+          const suffix = filters.length ? ` for ${filters.join(' · ')}` : '';
+          meta.innerHTML = `<span>${filtered.length} post${filtered.length === 1 ? '' : 's'}${suffix}</span>`;
+        }
+
+        function buildHaystack(post) {
+          return normalize([
+            post.title,
+            post.excerpt,
+            post.category,
+            ...(post.tags || []),
+            ...(post.keywords || [])
+          ].join(' '));
+        }
+
+        function setActiveCategory(category) {
+          document.querySelectorAll('.blog-category-pill[data-category]').forEach(button => {
+            button.classList.toggle('is-active', button.dataset.category === category);
+          });
+        }
 
         function applyFilters() {
-          const tag = document.getElementById('tag-filter').value;
-          const q = document.getElementById('search-input').value.trim().toLowerCase();
-          filtered = allPosts.filter(p => {
-            if (tag && !p.tags.includes(tag)) return false;
+          const category = document.getElementById('category-filter').value;
+          const topic = document.getElementById('topic-filter').value;
+          const q = normalize(document.getElementById('search-input').value);
+
+          filtered = allPosts.filter(post => {
+            if (category && post.category !== category) return false;
+            if (topic && !(post.tags || []).includes(topic) && !(post.keywords || []).includes(topic)) return false;
             if (!q) return true;
-            const hay = (p.title + ' ' + p.excerpt + ' ' + p.tags.join(' ')).toLowerCase();
-            return hay.includes(q);
+            return buildHaystack(post).includes(q);
           });
+
           currentPage = 1;
           render(paginate(filtered, currentPage));
           updatePageInfo();
+          setActiveCategory(category);
+        }
+
+        function populateFilterOptions(posts) {
+          const categoryFilter = document.getElementById('category-filter');
+          const topicFilter = document.getElementById('topic-filter');
+          const dictionary = document.getElementById('blog-dictionary');
+
+          const categories = new Set();
+          const topics = new Set();
+          const dictionaryTerms = new Set();
+
+          posts.forEach(post => {
+            if (post.category) categories.add(post.category);
+            (post.tags || []).forEach(tag => topics.add(tag));
+            (post.keywords || []).forEach(keyword => topics.add(keyword));
+            [post.title, post.category, ...(post.tags || []), ...(post.keywords || [])]
+              .filter(Boolean)
+              .forEach(term => dictionaryTerms.add(term));
+          });
+
+          for (const category of Array.from(categories).sort()) {
+            const option = document.createElement('option');
+            option.value = category;
+            option.textContent = category;
+            categoryFilter.appendChild(option);
+          }
+
+          for (const topic of Array.from(topics).sort((a, b) => a.localeCompare(b))) {
+            const option = document.createElement('option');
+            option.value = topic;
+            option.textContent = topic;
+            topicFilter.appendChild(option);
+          }
+
+          for (const term of Array.from(dictionaryTerms).sort((a, b) => a.localeCompare(b))) {
+            const option = document.createElement('option');
+            option.value = term;
+            dictionary.appendChild(option);
+          }
+        }
+
+        function wireFilterEvents() {
+          document.getElementById('category-filter').addEventListener('change', applyFilters);
+          document.getElementById('topic-filter').addEventListener('change', applyFilters);
+          document.getElementById('search-input').addEventListener('input', applyFilters);
+
+          document.querySelectorAll('.blog-category-pill[data-category]').forEach(button => {
+            button.addEventListener('click', () => {
+              document.getElementById('category-filter').value = button.dataset.category;
+              applyFilters();
+            });
+          });
         }
 
         async function loadPosts() {
           try {
             const res = await fetch('posts/index.json');
             allPosts = await res.json();
-            // sort by date desc
             allPosts.sort((a,b)=> b.date.localeCompare(a.date));
-            const tagSet = new Set();
-            allPosts.forEach(p=>p.tags.forEach(t=>tagSet.add(t)));
+            populateFilterOptions(allPosts);
+            wireFilterEvents();
 
-            const filter = document.getElementById('tag-filter');
-            for (const t of Array.from(tagSet).sort()) {
-              const opt = document.createElement('option');
-              opt.value = t;
-              opt.textContent = t;
-              filter.appendChild(opt);
-            }
-
-            document.getElementById('search-input').addEventListener('input', () => applyFilters());
-            filter.addEventListener('change', () => applyFilters());
-            // infinite scroll using IntersectionObserver
             const sentinel = document.getElementById('scroll-sentinel');
             const io = new IntersectionObserver(entries => {
               for (const e of entries) {
@@ -136,7 +236,6 @@
             }, { rootMargin: '400px' });
             io.observe(sentinel);
 
-            // initial
             filtered = allPosts;
             render(paginate(filtered, currentPage));
             updatePageInfo();
@@ -145,25 +244,6 @@
           }
         }
         document.addEventListener('DOMContentLoaded', loadPosts);
-      </script>
-
-      <script>
-        // patch render to allow append
-        const originalRender = window.render;
-        function render(list, append=false) {
-          const container = document.getElementById('posts-list');
-          if (!append) container.innerHTML = '';
-          for (const p of list) {
-            const article = document.createElement('article');
-            article.className = 'achievement-card';
-            article.innerHTML = `
-              <h3><a href="post.html?src=${encodeURIComponent(p.src)}">${p.title}</a></h3>
-              <p class="muted-note">${p.date} — ${p.tags.join(', ')}</p>
-              <p class="hero-copy">${p.excerpt}</p>
-            `;
-            container.appendChild(article);
-          }
-        }
       </script>
     </div>
   </main>

@@ -1,13 +1,24 @@
+---
+title: "Introducing the blog"
+date: "2026-05-18"
+category: "Thoughts"
+tags:
+  - platform engineering
+  - writing
+  - portfolio
+keywords:
+  - introduction
+  - blog
+  - reflections
+excerpt: "A short introduction to the blog and the kinds of platform engineering, cloud, and MLOps topics it will cover."
+---
+
 # Introducing the blog
 
 May 18, 2026
 
-Welcome to the portfolio blog. This is a sample post written in Markdown to demonstrate the client-side Markdown workflow. Write technical posts, non-technical reflections, or tutorials here.
+This blog is a place to share practical lessons from platform engineering, cloud architecture, CI/CD modernization, MLOps, and the quieter parts of building reliable systems.
 
-## Ideas
+Some posts will be technical deep dives. Others will be short reflections on engineering culture, learning, reliability, and the invisible work that helps teams move faster.
 
-- Case studies on cloud platform modernization
-- CI/CD patterns and examples
-- Short MLOps notes and architecture tips
-
-Replace this file with your own posts under `blog/posts/` and link them from `blog/index.html`.
+The goal is simple: document useful patterns, clarify what is working, and keep building a portfolio of ideas grounded in real engineering work.

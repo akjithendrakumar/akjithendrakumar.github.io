@@ -442,6 +442,84 @@ h3 {
   display: none;
 }
 
+.blog-filter-bar,
+.blog-filter-row,
+.blog-category-pills,
+.blog-results-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.blog-filter-bar {
+  align-items: end;
+  margin-bottom: 1rem;
+  padding: 1rem 1.1rem;
+  background: rgba(10, 16, 31, 0.7);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.blog-filter-row {
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 180px;
+}
+
+.blog-filter-row-grow {
+  flex: 1 1 280px;
+}
+
+.blog-filter-label {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.blog-filter-input {
+  width: 100%;
+  min-height: 2.8rem;
+  padding: 0.65rem 0.8rem;
+  color: var(--text);
+  background: rgba(14, 19, 36, 0.9);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.blog-category-pills {
+  margin-bottom: 1rem;
+}
+
+.blog-category-pill {
+  min-height: 2.5rem;
+  padding: 0.55rem 0.9rem;
+  color: var(--muted);
+  background: rgba(12, 19, 38, 0.74);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.blog-category-pill.is-active,
+.blog-category-pill:hover,
+.blog-category-pill:focus-visible {
+  color: #04111f;
+  background: linear-gradient(135deg, #59d7ff 0%, #9b8cff 100%);
+}
+
+.blog-category-pill.is-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.blog-results-meta {
+  margin-bottom: 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
 @media (max-width: 980px) {
   .site-header,
   .site-layout,
@@ -471,6 +549,10 @@ h3 {
 
   .site-nav-desktop {
     display: none;
+  }
+
+  .blog-filter-bar {
+    align-items: stretch;
   }
 
   .two-col,
