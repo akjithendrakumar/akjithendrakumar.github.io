@@ -110,15 +110,16 @@ async function urlExists(url) {
 
 function setResumeComingSoonState(resumeAction, resumeNote, label, message) {
   resumeAction.textContent = label || "Download PDF";
-  resumeAction.href = "resume-coming-soon.html";
+  resumeAction.href = "#";
   resumeAction.removeAttribute("download");
   resumeAction.removeAttribute("target");
   resumeAction.removeAttribute("rel");
+  resumeAction.onclick = (e) => e.preventDefault();
   resumeAction.dataset.defaultLabel = resumeAction.textContent;
-  resumeAction.dataset.hoverLabel = "Uploaded Soon";
+  resumeAction.dataset.hoverLabel = "Uploading Soon";
   resumeAction.classList.add("is-pending");
   resumeAction.onmouseenter = () => {
-    resumeAction.textContent = resumeAction.dataset.hoverLabel || "Uploaded Soon";
+    resumeAction.textContent = resumeAction.dataset.hoverLabel || "Uploading Soon";
   };
   resumeAction.onmouseleave = () => {
     resumeAction.textContent = resumeAction.dataset.defaultLabel || "Download PDF";
@@ -128,6 +129,7 @@ function setResumeComingSoonState(resumeAction, resumeNote, label, message) {
 
 function clearResumePendingState(resumeAction) {
   resumeAction.classList.remove("is-pending");
+  resumeAction.onclick = null;
   resumeAction.onmouseenter = null;
   resumeAction.onmouseleave = null;
   delete resumeAction.dataset.defaultLabel;

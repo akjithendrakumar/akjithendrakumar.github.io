@@ -5,13 +5,13 @@
   --bg-alt: #0e1324;
   --surface: rgba(14, 19, 36, 0.74);
   --surface-strong: rgba(22, 29, 54, 0.96);
-  --text: #e9f0ff;
-  --heading: #f8fbff;
-  --muted: #bcc8e8;
-  --line: rgba(176, 195, 255, 0.2);
-  --accent: #59d7ff;
-  --accent-strong: #8ce6ff;
-  --accent-soft: rgba(89, 215, 255, 0.14);
+  --text: #d4e3ff;
+  --heading: #ffffff;
+  --muted: #7a9ab8;
+  --line: rgba(120, 160, 210, 0.28);
+  --accent: #5ce0ff;
+  --accent-strong: #a0ecff;
+  --accent-soft: rgba(92, 224, 255, 0.14);
   --shadow: 0 24px 70px rgba(2, 6, 23, 0.45);
   --radius: 24px;
   --radius-sm: 16px;
@@ -327,6 +327,7 @@ h3 {
   color: #04111f;
   background: linear-gradient(135deg, #ffd166 0%, #ff9f6e 100%);
   box-shadow: 0 14px 30px rgba(255, 177, 92, 0.22);
+  cursor: not-allowed;
 }
 
 .quick-facts,

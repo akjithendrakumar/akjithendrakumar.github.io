@@ -4,13 +4,20 @@
     <title>Jithendra Kumar — Blog</title>
     <link>https://akjithendrakumar.github.io</link>
     <description>Blog posts about cloud architecture, DevOps, and MLOps.</description>
-    <lastBuildDate>Tue, 19 May 2026 06:54:43 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 19 May 2026 07:05:19 GMT</lastBuildDate>
+    <item>
+      <title>Modern CI/CD patterns for reliable delivery</title>
+      <link>https://akjithendrakumar.github.io/blog/articles/2026/05/19/modern-ci-cd-patterns-for-reliable-delivery/</link>
+      <pubDate>Tue, 19 May 2026 00:00:00 GMT</pubDate>
+      <description>A practical look at enterprise CI/CD patterns such as pipeline isolation, gated promotion, and safer release workflows.</description>
+      <guid>https://akjithendrakumar.github.io/blog/articles/2026/05/19/modern-ci-cd-patterns-for-reliable-delivery/</guid>
+    </item>
     <item>
       <title>Introducing the blog</title>
-      <link>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026/05/2026-05-18-sample-post.md</link>
+      <link>https://akjithendrakumar.github.io/blog/thoughts/2026/05/18/introducing-the-blog/</link>
       <pubDate>Mon, 18 May 2026 00:00:00 GMT</pubDate>
       <description>A short introduction to the blog and the kinds of platform engineering, cloud, and MLOps topics it will cover.</description>
-      <guid>https://akjithendrakumar.github.io/blog/post.html?src=posts/2026/05/2026-05-18-sample-post.md</guid>
+      <guid>https://akjithendrakumar.github.io/blog/thoughts/2026/05/18/introducing-the-blog/</guid>
     </item>
   </channel>
 </rss>
