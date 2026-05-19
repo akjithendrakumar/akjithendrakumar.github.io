@@ -73,10 +73,6 @@
       return params.get(name);
     }
 
-    function resolveBlogUrl(relativePath) {
-      return new URL(relativePath.replace(/^\//, ''), window.location.href).toString();
-    }
-
     function parsePublishDate(dateString) {
       if (!dateString) return null;
       const [year, month, day] = dateString.split('-').map(Number);
@@ -99,7 +95,7 @@
       try {
         let meta = null;
         try {
-          const listRes = await fetch(resolveBlogUrl('posts/index.json'));
+          const listRes = await fetch('posts/index.json');
           if (listRes.ok) {
             const posts = await listRes.json();
             meta = posts.find(p => p.src === src.replace(/^\//, '')) || posts.find(p => p.src === src);
@@ -109,13 +105,12 @@
             }
           }
         } catch (inner) {
-          // ignore metadata errors and continue with markdown fetch fallback
+          // ignore metadata errors and fall through to the generic error state
         }
 
-        const res = await fetch(resolveBlogUrl(src));
-        if (!res.ok) throw new Error('Failed to fetch');
-        const md = await res.text();
-        const html = window.marked ? marked.parse(md) : `<pre>${md.replace(/[&<>]/g, ch => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[ch]))}</pre>`;
+        if (!meta || !meta.content) throw new Error('Missing post content');
+        const markdown = meta.content;
+        const html = window.marked ? marked.parse(markdown) : `<pre>${markdown.replace(/[&<>]/g, ch => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[ch]))}</pre>`;
         document.getElementById('post-content').innerHTML = html;
 
         if (meta) {

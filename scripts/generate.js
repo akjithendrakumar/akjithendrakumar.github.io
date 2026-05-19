@@ -27,9 +27,10 @@ async function main() {
     const tags = parsed.data.tags || [];
     const keywords = parsed.data.keywords || [];
     const excerpt = parsed.data.excerpt || extractExcerpt(parsed.content);
+    const content = parsed.content.trim();
     const webPath = toWebPath(file);
     const src = `posts/${webPath}`;
-    posts.push({ title, date, category, tags, keywords, excerpt, src, url: `post.html?src=posts/${webPath}` });
+    posts.push({ title, date, category, tags, keywords, excerpt, content, src, url: `post.html?src=posts/${webPath}` });
   }
 
   posts.sort((a,b)=> b.date.localeCompare(a.date));
