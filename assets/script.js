@@ -20,10 +20,13 @@ function initSectionRouter() {
 
   if (!sections.length) return;
 
-  // Ensure all sections are visible (clear any leftover isolation state)
   sections.forEach(s => { s.hidden = false; });
   const hero = document.querySelector(".hero");
   if (hero) hero.hidden = false;
+
+  // Suppresses observer updates during programmatic (click-driven) scrolls
+  let isProgrammatic = false;
+  let scrollEndTimer = null;
 
   function setActive(id) {
     navLinks.forEach(link => {
@@ -32,32 +35,40 @@ function initSectionRouter() {
     });
   }
 
+  function beginProgrammaticScroll(id, doScroll) {
+    isProgrammatic = true;
+    clearTimeout(scrollEndTimer);
+    setActive(id);
+    doScroll();
+    // After smooth scroll finishes, hand control back to the observer
+    scrollEndTimer = setTimeout(() => { isProgrammatic = false; }, 900);
+  }
+
   // Smooth scroll on nav click
   document.querySelectorAll("a[href^=\"#\"]").forEach(link => {
     link.addEventListener("click", e => {
       const id = link.getAttribute("href").slice(1);
       e.preventDefault();
+
       if (!id || id === "top") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        beginProgrammaticScroll(null, () => window.scrollTo({ top: 0, behavior: "smooth" }));
         history.pushState(null, "", location.pathname);
-        setActive(null);
         return;
       }
+
       const target = document.getElementById(id);
       if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        beginProgrammaticScroll(id, () => target.scrollIntoView({ behavior: "smooth", block: "start" }));
         history.pushState(null, "", `#${id}`);
-        setActive(id);
       }
     });
   });
 
-  // Highlight active nav item as you scroll through sections
+  // IntersectionObserver — only fires during natural (non-programmatic) scrolling
   const observer = new IntersectionObserver(entries => {
+    if (isProgrammatic) return;
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        setActive(entry.target.id);
-      }
+      if (entry.isIntersecting) setActive(entry.target.id);
     });
   }, {
     rootMargin: "-15% 0px -75% 0px",
@@ -66,32 +77,34 @@ function initSectionRouter() {
 
   sections.forEach(s => observer.observe(s));
 
-  // Clear active state when scrolled back to top (hero area)
+  // Clear active when hero scrolls back into view
   const heroObserver = new IntersectionObserver(entries => {
+    if (isProgrammatic) return;
     if (entries[0].isIntersecting) setActive(null);
   }, { threshold: 0.1 });
 
   if (hero) heroObserver.observe(hero);
 
-  // On back/forward navigation
+  // Back/forward navigation
   window.addEventListener("popstate", () => {
     const id = location.hash.slice(1);
     if (!id || id === "top") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      setActive(null);
+      beginProgrammaticScroll(null, () => window.scrollTo({ top: 0, behavior: "smooth" }));
     } else {
       const target = document.getElementById(id);
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (target) beginProgrammaticScroll(id, () => target.scrollIntoView({ behavior: "smooth", block: "start" }));
     }
   });
 
-  // On initial load with a hash in the URL
+  // Initial load with a hash in the URL
   const initId = location.hash.slice(1);
   if (initId && initId !== "top") {
     const target = document.getElementById(initId);
     if (target) {
-      setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
       setActive(initId);
+      setTimeout(() => {
+        beginProgrammaticScroll(initId, () => target.scrollIntoView({ behavior: "smooth", block: "start" }));
+      }, 120);
     }
   }
 }
