@@ -33,8 +33,8 @@ async function applyResumeStatus(resumeAction, resumeNote) {
         setResumeComingSoonState(
           resumeAction,
           resumeNote,
-          "Resume Coming Soon",
-          "A local resume PDF is not available yet. The button will route to the placeholder status page for now."
+          label || "Download PDF",
+          message || "Use the button below to access the latest resume whenever it is available."
         );
         return;
       }
@@ -51,15 +51,15 @@ async function applyResumeStatus(resumeAction, resumeNote) {
         setResumeComingSoonState(
           resumeAction,
           resumeNote,
-          "Resume Coming Soon",
-          "An external resume link is not configured yet. The placeholder status page will be shown for now."
+          label || "Download PDF",
+          message || "Use the button below to access the latest resume whenever it is available."
         );
         return;
       }
-      resumeAction.href = url;
+      resumeAction.href = normalizeResumeUrl(url);
       resumeAction.removeAttribute("download");
-      resumeAction.setAttribute("target", "_blank");
-      resumeAction.setAttribute("rel", "noreferrer");
+      resumeAction.removeAttribute("target");
+      resumeAction.removeAttribute("rel");
       clearResumePendingState(resumeAction);
       return;
     }
@@ -82,14 +82,14 @@ function resolveResumeConfigPath() {
 
 function defaultResumeLabel(mode) {
   if (mode === "local") return "Download PDF";
-  if (mode === "external") return "Open Resume";
-  return "Resume Coming Soon";
+  if (mode === "external") return "Download PDF";
+  return "Download PDF";
 }
 
 function defaultResumeMessage(mode) {
-  if (mode === "local") return "A local PDF is available for download.";
-  if (mode === "external") return "The resume is currently hosted through an external link.";
-  return "The resume is not uploaded yet. A status page will be shown until it is ready.";
+  if (mode === "local") return "Use the button below to access the latest resume whenever it is available.";
+  if (mode === "external") return "Use the button below to download the latest resume from the configured external source.";
+  return "Use the button below to access the latest resume whenever it is available.";
 }
 
 async function urlExists(url) {
@@ -109,19 +109,19 @@ async function urlExists(url) {
 }
 
 function setResumeComingSoonState(resumeAction, resumeNote, label, message) {
-  resumeAction.textContent = label || "Resume Coming Soon";
+  resumeAction.textContent = label || "Download PDF";
   resumeAction.href = "resume-coming-soon.html";
   resumeAction.removeAttribute("download");
   resumeAction.removeAttribute("target");
   resumeAction.removeAttribute("rel");
   resumeAction.dataset.defaultLabel = resumeAction.textContent;
-  resumeAction.dataset.hoverLabel = "Coming Soon";
+  resumeAction.dataset.hoverLabel = "Uploaded Soon";
   resumeAction.classList.add("is-pending");
   resumeAction.onmouseenter = () => {
-    resumeAction.textContent = resumeAction.dataset.hoverLabel || "Coming Soon";
+    resumeAction.textContent = resumeAction.dataset.hoverLabel || "Uploaded Soon";
   };
   resumeAction.onmouseleave = () => {
-    resumeAction.textContent = resumeAction.dataset.defaultLabel || "Resume Coming Soon";
+    resumeAction.textContent = resumeAction.dataset.defaultLabel || "Download PDF";
   };
   resumeNote.textContent = message;
 }
@@ -132,4 +132,28 @@ function clearResumePendingState(resumeAction) {
   resumeAction.onmouseleave = null;
   delete resumeAction.dataset.defaultLabel;
   delete resumeAction.dataset.hoverLabel;
+}
+
+function normalizeResumeUrl(url) {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase();
+
+    if (host.includes("drive.google.com")) {
+      const idFromFilePath = parsed.pathname.match(/\/file\/d\/([^/]+)/);
+      const id = idFromFilePath?.[1] || parsed.searchParams.get("id");
+      if (id) {
+        return `https://drive.google.com/uc?export=download&id=${id}`;
+      }
+    }
+
+    if (host.includes("1drv.ms") || host.includes("onedrive.live.com")) {
+      parsed.searchParams.set("download", "1");
+      return parsed.toString();
+    }
+
+    return parsed.toString();
+  } catch (error) {
+    return url;
+  }
 }

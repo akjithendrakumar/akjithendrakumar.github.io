@@ -2,5 +2,5 @@
   "mode": "local",
   "url": "assets/resume.pdf",
   "label": "Download PDF",
-  "message": "A local placeholder PDF is available right now. Later this can switch to Google Drive, Outlook, or a coming-soon state without changing the page layout."
+  "message": "Use the button below to access the latest resume whenever it is available."
 }
