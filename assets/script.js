@@ -9,49 +9,48 @@ document.addEventListener("DOMContentLoaded", () => {
     applyResumeStatus(resumeAction);
   }
 
-  initNavHighlight();
+  initSectionRouter();
 });
 
-function initNavHighlight() {
+function initSectionRouter() {
+  const sections = Array.from(document.querySelectorAll("section[id]"));
+  const hero = document.querySelector(".hero");
   const navLinks = document.querySelectorAll(
-    '.site-nav a[href^="#"], .site-nav-desktop a[href^="#"]'
+    ".site-nav a[href^=\"#\"], .site-nav-desktop a[href^=\"#\"]"
   );
-  if (!navLinks.length) return;
 
-  const sectionIds = Array.from(navLinks)
-    .map(a => a.getAttribute("href").slice(1))
-    .filter(id => document.getElementById(id));
+  if (!sections.length) return;
 
-  if (!sectionIds.length) return;
+  function apply(id) {
+    const isLanding = !id || id === "top";
 
-  const intersecting = new Set();
-
-  function updateActive() {
-    if (intersecting.size === 0) {
-      navLinks.forEach(link => link.classList.remove("is-active"));
-      return;
-    }
-    let topId = null;
-    let topY = Infinity;
-    for (const id of intersecting) {
-      const y = document.getElementById(id).getBoundingClientRect().top;
-      if (y < topY) { topY = y; topId = id; }
-    }
     navLinks.forEach(link => {
-      link.classList.toggle("is-active", link.getAttribute("href") === `#${topId}`);
+      const href = link.getAttribute("href").slice(1);
+      link.classList.toggle("is-active", !isLanding && href === id);
     });
+
+    if (isLanding) {
+      if (hero) hero.hidden = false;
+      sections.forEach(s => { s.hidden = false; });
+    } else {
+      if (hero) hero.hidden = true;
+      sections.forEach(s => { s.hidden = s.id !== id; });
+      window.scrollTo({ top: 0 });
+    }
   }
 
-  const observer = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      entry.isIntersecting
-        ? intersecting.add(entry.target.id)
-        : intersecting.delete(entry.target.id);
-    }
-    updateActive();
-  }, { rootMargin: "-10% 0px -85% 0px" });
+  document.querySelectorAll("a[href^=\"#\"]").forEach(link => {
+    link.addEventListener("click", e => {
+      const id = link.getAttribute("href").slice(1);
+      e.preventDefault();
+      history.pushState(null, "", id ? `#${id}` : location.pathname);
+      apply(id);
+    });
+  });
 
-  sectionIds.forEach(id => observer.observe(document.getElementById(id)));
+  window.addEventListener("popstate", () => apply(location.hash.slice(1)));
+
+  apply(location.hash.slice(1));
 }
 
 async function applyResumeStatus(resumeAction) {

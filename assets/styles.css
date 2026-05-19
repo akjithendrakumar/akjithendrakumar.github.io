@@ -100,7 +100,6 @@ img {
 
 .section {
   padding: 5.5rem 0;
-  scroll-margin-top: 6rem;
 }
 
 .alt {
@@ -554,10 +553,33 @@ h3 {
 }
 
 .site-nav-desktop a:hover,
-.site-nav-desktop a:focus-visible,
+.site-nav-desktop a:focus-visible {
+  color: var(--accent-strong);
+  background: rgba(22, 29, 54, 0.88);
+}
+
 .site-nav-desktop a.is-active {
   color: var(--accent-strong);
   background: rgba(22, 29, 54, 0.88);
+  border-left: 2px solid var(--accent);
+  padding-left: calc(0.8rem - 2px);
+}
+
+.nav-group-label {
+  display: block;
+  padding: 0.5rem 0.8rem 0.25rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.nav-group-label:not(:first-child) {
+  margin-top: 0.75rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.85rem;
 }
 
 .site-nav-mobile {
