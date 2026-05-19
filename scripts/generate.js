@@ -286,11 +286,15 @@ function renderPostPage(post) {
             <div class="panel-card">
               <p class="panel-label">Share</p>
               <h3 id="share-title">Share this post</h3>
-              <p class="muted-note">Use the LinkedIn share action or customize the text below.</p>
-              <div style="display:flex; gap:0.5rem; margin:0.75rem 0; flex-wrap:wrap">
-                <button id="open-linkedin" class="btn btn-primary">Open LinkedIn share</button>
+              <div class="share-bar" id="post-share-bar" style="margin-top:0.75rem">
+                <a id="share-linkedin" class="share-btn" href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a id="share-twitter" class="share-btn" href="#" target="_blank" rel="noopener noreferrer">X / Twitter</a>
+                <a id="share-whatsapp" class="share-btn" href="#" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                <a id="share-telegram" class="share-btn" href="#" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a id="share-signal" class="share-btn" href="#">Signal</a>
+                <a id="share-email" class="share-btn" href="#">Email</a>
+                <button id="share-copy" class="share-btn" type="button">Copy Link</button>
               </div>
-              <textarea id="share-text" style="width:100%; min-height:84px; padding:0.6rem; border-radius:8px; border:1px solid var(--line);"></textarea>
             </div>
           </aside>
         </div>
@@ -325,15 +329,40 @@ function renderPostPage(post) {
       document.getElementById('share-panel').style.display = 'block';
       document.getElementById('share-title').textContent = post.title;
 
-      const hashtags = (post.tags || []).map(function (tag) {
-        return '#' + String(tag).replace(/[^a-zA-Z0-9]/g, '');
-      }).join(' ');
       const pageUrl = window.location.href;
-      const suggested = post.title + '\\n\\n' + post.excerpt + '\\n\\nRead more: ' + pageUrl + (hashtags ? '\\n\\n' + hashtags : '');
-      document.getElementById('share-text').value = suggested;
-      document.getElementById('open-linkedin').addEventListener('click', function () {
-        const shareUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(pageUrl);
-        window.open(shareUrl, '_blank', 'noopener');
+      const url = encodeURIComponent(pageUrl);
+      const title = encodeURIComponent(post.title);
+      const hashtags = (post.tags || []).map(function (tag) {
+        return '%23' + String(tag).replace(/[^a-zA-Z0-9]/g, '');
+      }).join('%20');
+      const tweetText = hashtags ? title + '%20' + hashtags : title;
+
+      document.getElementById('share-linkedin').href =
+        'https://www.linkedin.com/sharing/share-offsite/?url=' + url;
+      document.getElementById('share-twitter').href =
+        'https://x.com/intent/tweet?url=' + url + '&text=' + tweetText;
+      document.getElementById('share-whatsapp').href =
+        'https://wa.me/?text=' + title + '%20' + url;
+      document.getElementById('share-telegram').href =
+        'https://t.me/share/url?url=' + url + '&text=' + title;
+      document.getElementById('share-email').href =
+        'mailto:?subject=' + title + '&body=' + encodeURIComponent('Check out this post: ' + pageUrl);
+
+      // Signal and Copy both copy the link to clipboard
+      ['share-signal', 'share-copy'].forEach(function (id) {
+        document.getElementById(id).addEventListener('click', function (e) {
+          e.preventDefault();
+          var btn = document.getElementById(id);
+          navigator.clipboard.writeText(pageUrl).then(function () {
+            var orig = btn.textContent;
+            btn.textContent = 'Copied!';
+            btn.classList.add('is-copied');
+            setTimeout(function () {
+              btn.textContent = orig;
+              btn.classList.remove('is-copied');
+            }, 2000);
+          });
+        });
       });
     }
 

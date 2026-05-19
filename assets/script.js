@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   initSectionRouter();
+  initShareBars();
 });
 
 // ---------------------------------------------------------------------------
@@ -308,6 +309,78 @@ function clearResumePendingState(resumeAction) {
   resumeAction.onmouseleave = null;
   delete resumeAction.dataset.defaultLabel;
   delete resumeAction.dataset.hoverLabel;
+}
+
+// ---------------------------------------------------------------------------
+// Share bar — LinkedIn, X/Twitter, WhatsApp, Telegram, Signal, Email, Copy
+// ---------------------------------------------------------------------------
+
+function initShareBars() {
+  document.querySelectorAll(".share-bar").forEach(bar => {
+    const rawUrl = window.location.href;
+    const url = encodeURIComponent(rawUrl);
+    const title = encodeURIComponent(document.title);
+
+    bar.querySelectorAll("[data-share]").forEach(btn => {
+      const platform = btn.dataset.share;
+
+      switch (platform) {
+        case "linkedin":
+          btn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+          break;
+        case "twitter":
+          btn.href = `https://x.com/intent/tweet?url=${url}&text=${title}`;
+          break;
+        case "whatsapp":
+          btn.href = `https://wa.me/?text=${title}%20${url}`;
+          break;
+        case "telegram":
+          btn.href = `https://t.me/share/url?url=${url}&text=${title}`;
+          break;
+        case "signal":
+          // Signal has no web share URL; copy the link so user can paste into Signal
+          btn.addEventListener("click", e => {
+            e.preventDefault();
+            copyToClipboard(btn, rawUrl);
+          });
+          break;
+        case "email":
+          btn.href = `mailto:?subject=${title}&body=${encodeURIComponent("Check this out: " + rawUrl)}`;
+          break;
+        case "copy":
+          btn.addEventListener("click", () => copyToClipboard(btn, rawUrl));
+          break;
+      }
+    });
+  });
+}
+
+function copyToClipboard(btn, text) {
+  const original = btn.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = "Copied!";
+    btn.classList.add("is-copied");
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove("is-copied");
+    }, 2000);
+  }).catch(() => {
+    // Fallback for browsers without clipboard API
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    btn.textContent = "Copied!";
+    btn.classList.add("is-copied");
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove("is-copied");
+    }, 2000);
+  });
 }
 
 function normalizeResumeUrl(url) {
