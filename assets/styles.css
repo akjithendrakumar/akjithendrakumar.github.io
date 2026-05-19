@@ -86,9 +86,25 @@ h3 {
 }
 
 .brand {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.brand-name {
   font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: -0.02em;
+}
+
+.brand-meta {
+  color: var(--muted);
+  font-family: "Inter", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .site-nav {
