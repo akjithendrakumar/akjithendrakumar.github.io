@@ -30,5 +30,6 @@ Workflows and PAT setup
 
 Important: keep the PAT secret safe and rotate it if compromised. If you prefer not to use a PAT, you can instead allow `GITHUB_TOKEN` push access on the repository or organization settings.
 Deployment
-- The only publish workflow runs on pushes to `main`, which means feature branches should go through a pull request and only publish after merge.
+- The only publish workflow runs on pushes to `main`, which means changes should be tested locally first and only then merged to `main`.
+- The publish workflow uses a single concurrency group on `main`, so if one deploy run is still active, later runs wait in the queue instead of overlapping or canceling the in-progress run.
 - To enable Pages, go to repository Settings → Pages and select `Deploy from a branch`, then choose `main` and `/ (root)`.
