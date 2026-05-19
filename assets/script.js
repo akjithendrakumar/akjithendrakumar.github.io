@@ -24,16 +24,31 @@ function initNavHighlight() {
 
   if (!sectionIds.length) return;
 
-  function setActive(id) {
+  const intersecting = new Set();
+
+  function updateActive() {
+    if (intersecting.size === 0) {
+      navLinks.forEach(link => link.classList.remove("is-active"));
+      return;
+    }
+    let topId = null;
+    let topY = Infinity;
+    for (const id of intersecting) {
+      const y = document.getElementById(id).getBoundingClientRect().top;
+      if (y < topY) { topY = y; topId = id; }
+    }
     navLinks.forEach(link => {
-      link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`);
+      link.classList.toggle("is-active", link.getAttribute("href") === `#${topId}`);
     });
   }
 
   const observer = new IntersectionObserver(entries => {
     for (const entry of entries) {
-      if (entry.isIntersecting) setActive(entry.target.id);
+      entry.isIntersecting
+        ? intersecting.add(entry.target.id)
+        : intersecting.delete(entry.target.id);
     }
+    updateActive();
   }, { rootMargin: "-10% 0px -85% 0px" });
 
   sectionIds.forEach(id => observer.observe(document.getElementById(id)));
