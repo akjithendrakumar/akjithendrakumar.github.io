@@ -522,7 +522,13 @@ h3 {
 }
 
 .site-layout {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 5rem);
+}
+
+.site-layout > main {
+  flex: 1;
 }
 
 .sidebar {
