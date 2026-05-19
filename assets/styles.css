@@ -388,10 +388,48 @@ h3 {
   align-items: center;
   border-top: 1px solid var(--line);
   padding-top: 1.25rem;
+
+/* Layout with left sidebar */
+.site-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.sidebar {
+  padding-top: 1.5rem;
+}
+
+.site-nav-desktop {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.site-nav-desktop a {
+  display: inline-block;
+  padding: 0.6rem 0.8rem;
+  border-radius: 10px;
+  color: var(--muted);
+}
+
+.site-nav-desktop a:hover { color: var(--accent-strong); background: var(--surface-strong); }
+
+/* Mobile: show top nav and hide sidebar */
+.site-nav-mobile { display: none; }
+
 }
 
 @media (max-width: 980px) {
   .hero-grid,
+
+  .site-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .site-nav-mobile { display: flex; gap:0.6rem; }
+  .site-nav-desktop { display: none; }
   .two-col,
   .todo-layout,
   .contact-card,
