@@ -46,10 +46,9 @@
           <div class="panel-card">
             <p class="panel-label">Share</p>
             <h3 id="share-title">Share this post</h3>
-            <p class="muted-note">Quickly share a ready-made LinkedIn post or customize text below.</p>
+            <p class="muted-note">Use the LinkedIn share action or customize the text below.</p>
             <div style="display:flex; gap:0.5rem; margin:0.75rem 0; flex-wrap:wrap">
               <button id="open-linkedin" class="btn btn-primary">Open LinkedIn share</button>
-              <button id="copy-text" class="btn btn-secondary">Copy post text</button>
             </div>
             <textarea id="share-text" style="width:100%; min-height:84px; padding:0.6rem; border-radius:8px; border:1px solid var(--line);"></textarea>
           </div>
@@ -124,12 +123,6 @@
           document.getElementById('open-linkedin').addEventListener('click', ()=>{
             const shareUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(pageUrl);
             window.open(shareUrl, '_blank', 'noopener');
-          });
-
-          document.getElementById('copy-text').addEventListener('click', async ()=>{
-            const txt = document.getElementById('share-text').value;
-            try { await navigator.clipboard.writeText(txt); alert('Copied LinkedIn text to clipboard'); }
-            catch(e){ prompt('Copy the text below:', txt); }
           });
         }
 

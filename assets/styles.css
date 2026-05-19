@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap");
+
 :root {
   --bg: #090b16;
   --bg-alt: #0e1324;
@@ -39,6 +41,12 @@ body {
     radial-gradient(circle at 24% 72%, rgba(236, 72, 153, 0.14), transparent 0 16%),
     linear-gradient(180deg, #0a0d1c 0%, #070b17 52%, #05070f 100%);
   line-height: 1.65;
+}
+
+body,
+body *:not(input):not(textarea):not(select) {
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 body::before,
