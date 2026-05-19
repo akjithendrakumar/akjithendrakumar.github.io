@@ -249,8 +249,10 @@ function renderPostPage(post) {
       </a>
       <nav class="site-nav site-nav-mobile" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <a href="/blog/">Blog</a>
         <a href="/resume.html">Resume</a>
+        <a href="/blog/">All Posts</a>
+        <a href="/blog/?type=thoughts">Thoughts</a>
+        <a href="/blog/?type=whitepapers">Whitepapers</a>
       </nav>
     </div>
   </header>
@@ -261,7 +263,9 @@ function renderPostPage(post) {
         <nav class="site-nav-desktop">
           <a href="/">Home</a>
           <a href="/resume.html">Resume</a>
-          <a href="/blog/">Blog</a>
+          <a href="/blog/">All Posts</a>
+          <a href="/blog/?type=thoughts">Thoughts</a>
+          <a href="/blog/?type=whitepapers">Whitepapers</a>
         </nav>
       </div>
     </aside>

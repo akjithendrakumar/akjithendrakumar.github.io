@@ -18,10 +18,11 @@
         </span>
       </a>
       <nav class="site-nav site-nav-mobile" aria-label="Primary navigation">
-        <a href="../">Home</a>
-        <a href="../#about">About</a>
-        <a href="../#contact">Contact</a>
-        <a href="../resume.html">Resume</a>
+        <a href="/">Home</a>
+        <a href="/resume.html">Resume</a>
+        <a href="/blog/">All Posts</a>
+        <a href="/blog/?type=thoughts">Thoughts</a>
+        <a href="/blog/?type=whitepapers">Whitepapers</a>
       </nav>
     </div>
   </header>
@@ -32,8 +33,9 @@
         <nav class="site-nav-desktop">
           <a href="/">Home</a>
           <a href="/resume.html">Resume</a>
-          <a href="/blog/">Blog</a>
-          <a href="/">Back to site</a>
+          <a href="/blog/">All Posts</a>
+          <a href="/blog/?type=thoughts">Thoughts</a>
+          <a href="/blog/?type=whitepapers">Whitepapers</a>
         </nav>
       </div>
     </aside>
@@ -70,7 +72,6 @@
       <div class="blog-category-pills" aria-label="Blog categories">
         <button type="button" class="blog-category-pill is-active" data-category="">All</button>
         <button type="button" class="blog-category-pill" data-category="Thoughts" data-label="Thoughts">Thoughts</button>
-        <button type="button" class="blog-category-pill" data-category="Articles" data-label="Articles">Articles</button>
         <button type="button" class="blog-category-pill" data-category="Whitepapers" data-label="Whitepapers">Whitepapers</button>
       </div>
 
@@ -189,6 +190,15 @@
           render(paginate(filtered, currentPage));
           updatePageInfo();
           setActiveCategory(category);
+
+          const params = new URLSearchParams(location.search);
+          if (category) {
+            params.set('type', category.toLowerCase());
+          } else {
+            params.delete('type');
+          }
+          const qs = params.toString();
+          history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
         }
 
         function populateFilterOptions(posts) {
@@ -201,7 +211,7 @@
           const dictionaryTerms = new Set();
 
           posts.forEach(post => {
-            if (post.category) categories.add(post.category);
+            if (post.category && post.category !== 'Articles') categories.add(post.category);
             (post.tags || []).forEach(tag => topics.add(tag));
             (post.keywords || []).forEach(keyword => topics.add(keyword));
             [post.title, post.category, ...(post.tags || []), ...(post.keywords || [])]
@@ -270,6 +280,16 @@
             filtered = allPosts;
             render(paginate(filtered, currentPage));
             updatePageInfo();
+
+            const typeParam = new URLSearchParams(location.search).get('type');
+            if (typeParam) {
+              const catMap = { thoughts: 'Thoughts', whitepapers: 'Whitepapers' };
+              const cat = catMap[typeParam.toLowerCase()];
+              if (cat) {
+                document.getElementById('category-filter').value = cat;
+                applyFilters();
+              }
+            }
           } catch (e) {
             document.getElementById('posts-list').innerText = 'Unable to load posts.';
           }
