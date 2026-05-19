@@ -14,43 +14,86 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function initSectionRouter() {
   const sections = Array.from(document.querySelectorAll("section[id]"));
-  const hero = document.querySelector(".hero");
   const navLinks = document.querySelectorAll(
     ".site-nav a[href^=\"#\"], .site-nav-desktop a[href^=\"#\"]"
   );
 
   if (!sections.length) return;
 
-  function apply(id) {
-    const isLanding = !id || id === "top";
+  // Ensure all sections are visible (clear any leftover isolation state)
+  sections.forEach(s => { s.hidden = false; });
+  const hero = document.querySelector(".hero");
+  if (hero) hero.hidden = false;
 
+  function setActive(id) {
     navLinks.forEach(link => {
       const href = link.getAttribute("href").slice(1);
-      link.classList.toggle("is-active", !isLanding && href === id);
+      link.classList.toggle("is-active", !!id && href === id);
     });
-
-    if (isLanding) {
-      if (hero) hero.hidden = false;
-      sections.forEach(s => { s.hidden = false; });
-    } else {
-      if (hero) hero.hidden = true;
-      sections.forEach(s => { s.hidden = s.id !== id; });
-      window.scrollTo({ top: 0 });
-    }
   }
 
+  // Smooth scroll on nav click
   document.querySelectorAll("a[href^=\"#\"]").forEach(link => {
     link.addEventListener("click", e => {
       const id = link.getAttribute("href").slice(1);
       e.preventDefault();
-      history.pushState(null, "", id ? `#${id}` : location.pathname);
-      apply(id);
+      if (!id || id === "top") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        history.pushState(null, "", location.pathname);
+        setActive(null);
+        return;
+      }
+      const target = document.getElementById(id);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.pushState(null, "", `#${id}`);
+        setActive(id);
+      }
     });
   });
 
-  window.addEventListener("popstate", () => apply(location.hash.slice(1)));
+  // Highlight active nav item as you scroll through sections
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setActive(entry.target.id);
+      }
+    });
+  }, {
+    rootMargin: "-15% 0px -75% 0px",
+    threshold: 0
+  });
 
-  apply(location.hash.slice(1));
+  sections.forEach(s => observer.observe(s));
+
+  // Clear active state when scrolled back to top (hero area)
+  const heroObserver = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) setActive(null);
+  }, { threshold: 0.1 });
+
+  if (hero) heroObserver.observe(hero);
+
+  // On back/forward navigation
+  window.addEventListener("popstate", () => {
+    const id = location.hash.slice(1);
+    if (!id || id === "top") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setActive(null);
+    } else {
+      const target = document.getElementById(id);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+
+  // On initial load with a hash in the URL
+  const initId = location.hash.slice(1);
+  if (initId && initId !== "top") {
+    const target = document.getElementById(initId);
+    if (target) {
+      setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
+      setActive(initId);
+    }
+  }
 }
 
 async function applyResumeStatus(resumeAction) {
