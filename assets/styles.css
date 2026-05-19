@@ -100,6 +100,7 @@ img {
 
 .section {
   padding: 5.5rem 0;
+  scroll-margin-top: 6rem;
 }
 
 .alt {
@@ -204,7 +205,8 @@ h3 {
 }
 
 .site-nav a:hover,
-.site-nav a:focus-visible {
+.site-nav a:focus-visible,
+.site-nav a.is-active {
   color: var(--accent-strong);
 }
 
@@ -552,7 +554,8 @@ h3 {
 }
 
 .site-nav-desktop a:hover,
-.site-nav-desktop a:focus-visible {
+.site-nav-desktop a:focus-visible,
+.site-nav-desktop a.is-active {
   color: var(--accent-strong);
   background: rgba(22, 29, 54, 0.88);
 }

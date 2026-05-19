@@ -1,16 +1,43 @@
 document.addEventListener("DOMContentLoaded", () => {
   const year = document.getElementById("year");
-
   if (year) {
     year.textContent = String(new Date().getFullYear());
   }
 
   const resumeAction = document.getElementById("resume-action");
-
   if (resumeAction) {
     applyResumeStatus(resumeAction);
   }
+
+  initNavHighlight();
 });
+
+function initNavHighlight() {
+  const navLinks = document.querySelectorAll(
+    '.site-nav a[href^="#"], .site-nav-desktop a[href^="#"]'
+  );
+  if (!navLinks.length) return;
+
+  const sectionIds = Array.from(navLinks)
+    .map(a => a.getAttribute("href").slice(1))
+    .filter(id => document.getElementById(id));
+
+  if (!sectionIds.length) return;
+
+  function setActive(id) {
+    navLinks.forEach(link => {
+      link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`);
+    });
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) setActive(entry.target.id);
+    }
+  }, { rootMargin: "-10% 0px -85% 0px" });
+
+  sectionIds.forEach(id => observer.observe(document.getElementById(id)));
+}
 
 async function applyResumeStatus(resumeAction) {
   try {
