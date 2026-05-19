@@ -40,11 +40,7 @@
         <!-- Posts will be rendered here -->
       </div>
 
-      <div style="display:flex; justify-content:center; margin-top:1rem; gap:1rem; align-items:center;">
-        <button id="prev-page" class="btn btn-secondary">Previous</button>
-        <span id="page-info" style="color:var(--muted)"></span>
-        <button id="next-page" class="btn btn-secondary">Next</button>
-      </div>
+      <div class="scroll-sentinel" id="scroll-sentinel"></div>
 
       <script>
         let allPosts = [];
@@ -76,13 +72,7 @@
           }
         }
 
-        function updatePageInfo() {
-          const pageInfo = document.getElementById('page-info');
-          const total = Math.max(1, Math.ceil(filtered.length / pageSize));
-          pageInfo.textContent = `Page ${currentPage} of ${total}`;
-          document.getElementById('prev-page').disabled = currentPage <= 1;
-          document.getElementById('next-page').disabled = currentPage >= total;
-        }
+        function updatePageInfo() { /* no-op for infinite scroll */ }
 
         function applyFilters() {
           const tag = document.getElementById('tag-filter').value;
@@ -117,8 +107,21 @@
 
             document.getElementById('search-input').addEventListener('input', () => applyFilters());
             filter.addEventListener('change', () => applyFilters());
-            document.getElementById('prev-page').addEventListener('click', ()=>{ if(currentPage>1){currentPage--; render(paginate(filtered,currentPage)); updatePageInfo();}});
-            document.getElementById('next-page').addEventListener('click', ()=>{ const total = Math.ceil(filtered.length/pageSize); if(currentPage<total){currentPage++; render(paginate(filtered,currentPage)); updatePageInfo();}});
+            // infinite scroll using IntersectionObserver
+            const sentinel = document.getElementById('scroll-sentinel');
+            const io = new IntersectionObserver(entries => {
+              for (const e of entries) {
+                if (e.isIntersecting) {
+                  const total = Math.ceil(filtered.length / pageSize);
+                  if (currentPage < total) {
+                    currentPage++;
+                    const next = paginate(filtered, currentPage);
+                    render(next, true);
+                  }
+                }
+              }
+            }, { rootMargin: '400px' });
+            io.observe(sentinel);
 
             // initial
             filtered = allPosts;
@@ -129,6 +132,25 @@
           }
         }
         document.addEventListener('DOMContentLoaded', loadPosts);
+      </script>
+
+      <script>
+        // patch render to allow append
+        const originalRender = window.render;
+        function render(list, append=false) {
+          const container = document.getElementById('posts-list');
+          if (!append) container.innerHTML = '';
+          for (const p of list) {
+            const article = document.createElement('article');
+            article.className = 'achievement-card';
+            article.innerHTML = `
+              <h3><a href="post.html?src=${encodeURIComponent(p.src)}">${p.title}</a></h3>
+              <p class="muted-note">${p.date} — ${p.tags.join(', ')}</p>
+              <p class="hero-copy">${p.excerpt}</p>
+            `;
+            container.appendChild(article);
+          }
+        }
       </script>
     </div>
   </main>

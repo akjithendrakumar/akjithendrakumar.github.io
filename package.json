@@ -1,0 +1,13 @@
+{
+  "name": "portfolio-site-tools",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "generate": "node ./scripts/generate.js"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "fs-extra": "^11.1.1",
+    "puppeteer": "^21.0.0"
+  }
+}

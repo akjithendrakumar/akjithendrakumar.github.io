@@ -436,3 +436,49 @@ h3 {
     max-width: none;
   }
 }
+
+/* Blog post typography and code styling */
+#post-content,
+.achievement-card .post-content,
+.achievement-card .hero-copy {
+  line-height: 1.8;
+  color: var(--text);
+}
+
+#post-content h1, #post-content h2, #post-content h3 {
+  font-family: "Space Grotesk", sans-serif;
+  margin-top: 1rem;
+}
+
+#post-content p {
+  color: var(--muted);
+  margin-bottom: 0.9rem;
+}
+
+#post-content pre {
+  background: #0f1720;
+  color: #dbeafe;
+  padding: 1rem;
+  border-radius: 12px;
+  overflow: auto;
+}
+
+#post-content code {
+  background: rgba(27,29,31,0.06);
+  padding: 0.15rem 0.35rem;
+  border-radius: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;
+}
+
+#post-content blockquote {
+  border-left: 4px solid var(--accent);
+  padding-left: 1rem;
+  color: var(--muted);
+  background: rgba(31,111,95,0.03);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+}
+
+/* Seamless/infinite scroll sentinel */
+.scroll-sentinel { height: 1px; }
+
