@@ -4,7 +4,14 @@
     <title>Jithendra Kumar — Blog</title>
     <link>https://akjithendrakumar.github.io</link>
     <description>Blog posts about cloud architecture, DevOps, and MLOps.</description>
-    <lastBuildDate>Tue, 19 May 2026 07:05:19 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2026 18:48:20 GMT</lastBuildDate>
+    <item>
+      <title>Reflections on platform engineering as a career</title>
+      <link>https://akjithendrakumar.github.io/blog/thoughts/2026/05/20/reflections-on-platform-engineering-as-a-career/</link>
+      <pubDate>Wed, 20 May 2026 00:00:00 GMT</pubDate>
+      <description>A short reflection on platform engineering as a career path and the mindset required to keep growing with the work.</description>
+      <guid>https://akjithendrakumar.github.io/blog/thoughts/2026/05/20/reflections-on-platform-engineering-as-a-career/</guid>
+    </item>
     <item>
       <title>Modern CI/CD patterns for reliable delivery</title>
       <link>https://akjithendrakumar.github.io/blog/articles/2026/05/19/modern-ci-cd-patterns-for-reliable-delivery/</link>

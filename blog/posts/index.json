@@ -1,5 +1,293 @@
 [
   {
+    "title": "Learning never stops in engineering",
+    "date": "2026-05-31",
+    "category": "Thoughts",
+    "tags": [
+      "learning",
+      "career growth",
+      "platform engineering"
+    ],
+    "keywords": [
+      "upskilling",
+      "adaptability",
+      "ai"
+    ],
+    "excerpt": "Engineering stays interesting because learning never really stops, whether it happens in a course, a document, or a production issue.",
+    "content": "# Learning never stops in engineering\n\nOne thing I appreciate about working in technology is that learning never really stops.\n\nEvery new tool, system, issue, and project teaches something.\n\nAs a platform engineer, I often work across different areas: cloud, automation, security, reliability, deployments, monitoring, and developer experience. It reminds me that modern engineering is not about knowing one thing forever. It is about staying curious and adaptable.\n\nThe technology landscape keeps changing, especially with AI becoming a core part of how teams build, operate, and improve systems. New tooling, new paradigms, and new failure modes appear regularly. The engineers who stay effective are not always the ones who know the most at any given moment — they are the ones who learn quickly, reason from first principles, and are honest about what they do not yet understand.\n\nSome of the most useful learning in my career has happened outside of formal training. Reading an incident postmortem and understanding the second and third-order causes. Reviewing a pull request in an unfamiliar codebase and having to understand the context before commenting. Picking up a tool for the first time to solve a real problem under real constraints. These experiences build the kind of practical knowledge that is difficult to acquire in a structured curriculum.\n\nLearning from colleagues is also underrated. Sitting with someone who approaches a problem differently, asking questions without assuming you already know the answer, and being willing to revise your own mental models — these are habits that compound over time. The best engineering teams are ones where knowledge moves freely rather than sitting with individuals.\n\nUpskilling does not always have to happen in a classroom or through a certification. Sometimes it happens while debugging an issue, improving a process, reading documentation, testing an idea, or learning from a teammate.\n\nThe core mindset is simple: Be curious. Keep learning. Solve real problems. Make things better for others. Small learning moments compound over time, and the engineers who keep building that habit consistently are the ones who stay sharp regardless of how fast the landscape shifts around them.",
+    "slug": "learning-never-stops-in-engineering",
+    "src": "posts/2026/05/2026-05-31-learning-never-stops-in-engineering.md",
+    "route": "/blog/thoughts/2026/05/31/learning-never-stops-in-engineering/",
+    "url": "/blog/thoughts/2026/05/31/learning-never-stops-in-engineering/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/thoughts/2026/05/31/learning-never-stops-in-engineering/",
+    "legacyUrl": "/blog/post.html?src=posts%2F2026%2F05%2F2026-05-31-learning-never-stops-in-engineering.md",
+    "published": false
+  },
+  {
+    "title": "The best platforms feel simple",
+    "date": "2026-05-30",
+    "category": "Thoughts",
+    "tags": [
+      "platform engineering",
+      "developer experience",
+      "simplicity"
+    ],
+    "keywords": [
+      "documentation",
+      "reusable tools",
+      "secure defaults"
+    ],
+    "excerpt": "Simple platform experiences usually come from thoughtful engineering, not from a lack of complexity under the hood.",
+    "content": "# The best platforms feel simple\n\nThe best platforms often feel simple to the people using them. But that simplicity usually comes from a lot of thoughtful work behind the scenes.\n\nClear processes.  \nReusable tools.  \nStrong security.  \nReliable infrastructure.  \nGood documentation.  \nSmart automation.  \nContinuous feedback.\n\nA good platform should reduce confusion, remove repeated effort, and create consistency. It should help teams spend less time figuring out how to get started and more time focusing on what they want to build.\n\nThe most common failure mode in platform design is optimizing for the platform team's preferences rather than the consumer's experience. A platform that requires teams to understand ten layers of abstraction before they can deploy a service is not simple — it is just complexity that has been moved rather than reduced.\n\nSecure defaults are one of the clearest examples of simplicity done right. When the platform provisions infrastructure with encryption, logging, and least-privilege access by default — so that teams do not have to think about it — it creates security without adding cognitive load. The secure path and the easy path are the same path. That is good platform design.\n\nDocumentation is often treated as a secondary concern, but it is part of the platform experience. A platform that requires a one-hour conversation with the platform team before it can be used is not ready for broad adoption, regardless of how well it is engineered underneath. Self-service documentation, runbooks, and examples reduce the dependency on tribal knowledge and make the platform accessible to teams who joined after it was built.\n\nFeedback loops are what keep a platform simple over time. Without regular input from the teams using it, platforms accumulate features and options that were needed once and now add complexity without value. Treating simplicity as an ongoing discipline rather than a design-time property is what separates platforms that age well from ones that become legacy systems.\n\nSimple does not mean basic. Sometimes simple is the result of very careful engineering — and the most important sign of a well-designed platform is that the people using it do not have to think about how it works.",
+    "slug": "the-best-platforms-feel-simple",
+    "src": "posts/2026/05/2026-05-30-the-best-platforms-feel-simple.md",
+    "route": "/blog/thoughts/2026/05/30/the-best-platforms-feel-simple/",
+    "url": "/blog/thoughts/2026/05/30/the-best-platforms-feel-simple/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/thoughts/2026/05/30/the-best-platforms-feel-simple/",
+    "legacyUrl": "/blog/post.html?src=posts%2F2026%2F05%2F2026-05-30-the-best-platforms-feel-simple.md",
+    "published": false
+  },
+  {
+    "title": "Reliability is a form of trust",
+    "date": "2026-05-29",
+    "category": "Thoughts",
+    "tags": [
+      "reliability",
+      "trust",
+      "devops"
+    ],
+    "keywords": [
+      "observability",
+      "incident response",
+      "platform engineering"
+    ],
+    "excerpt": "Reliable systems create trust for teams, customers, and the business long before anyone calls it out explicitly.",
+    "content": "# Reliability is a form of trust\n\nReliability is not just a technical goal. It is a form of trust.\n\nWhen a system works consistently, people trust it.  \nWhen teams can deploy safely, they trust the process.  \nWhen issues are detected early, customers trust the experience.  \nWhen platforms are stable, businesses trust technology to move forward.\n\nAs a platform engineer, I see reliability as one of the most important parts of building modern technology.\n\nIt is not only about avoiding failure. It is about being prepared, learning from incidents, improving systems, and creating confidence for everyone involved.\n\nReliability is also a product of the small decisions that accumulate over time. Writing runbooks before they are needed. Adding meaningful health checks to services. Setting alert thresholds at levels that reflect real user impact rather than arbitrary percentages. Building deployment pipelines that make rollbacks fast rather than an exception procedure. These choices rarely get highlighted in planning meetings, but they are what separates systems that teams trust from systems that teams work around.\n\nIncident response is where trust is earned or lost in the most visible way. A team that resolves problems quickly, communicates clearly during an outage, and conducts honest retrospectives builds credibility with users and leadership. A team that is slow to respond, unclear in communication, or reluctant to examine what went wrong erodes trust even when individual incidents are rare.\n\nObservability is the foundation of reliable operations. Without clear visibility into what is happening inside a system — metrics, logs, traces, and synthetic checks — teams are responding to symptoms rather than causes. Every alert that fires without leading to a useful action is a signal that the observability layer needs refinement. Good observability reduces the distance between \"something is wrong\" and \"we know what it is and how to fix it.\"\n\nEvery alert, dashboard, deployment process, backup plan, and improvement contributes to something bigger. In a fast-moving digital world, reliability may not always get attention when things are going well. But it becomes priceless when things go wrong.",
+    "slug": "reliability-is-a-form-of-trust",
+    "src": "posts/2026/05/2026-05-29-reliability-is-a-form-of-trust.md",
+    "route": "/blog/thoughts/2026/05/29/reliability-is-a-form-of-trust/",
+    "url": "/blog/thoughts/2026/05/29/reliability-is-a-form-of-trust/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/thoughts/2026/05/29/reliability-is-a-form-of-trust/",
+    "legacyUrl": "/blog/post.html?src=posts%2F2026%2F05%2F2026-05-29-reliability-is-a-form-of-trust.md",
+    "published": false
+  },
+  {
+    "title": "Automation is not about replacing people",
+    "date": "2026-05-28",
+    "category": "Thoughts",
+    "tags": [
+      "automation",
+      "platform engineering",
+      "productivity"
+    ],
+    "keywords": [
+      "engineering culture",
+      "human judgment",
+      "time back"
+    ],
+    "excerpt": "The best automation does not remove people from the process. It removes unnecessary friction from the process.",
+    "content": "# Automation is not about replacing people\n\nAutomation is often misunderstood.\n\nMany people think automation is only about replacing manual work. But in my experience, automation is more about giving people time back.\n\nTime to think.  \nTime to solve harder problems.  \nTime to innovate.  \nTime to improve quality.  \nTime to focus on work that actually needs human judgment.\n\nAs a platform engineer, I see automation as a way to reduce repetitive tasks, prevent avoidable mistakes, and create consistency across teams.\n\nThe best automation does not remove people from the process. It removes unnecessary friction from the process.\n\nThe work that benefits most from automation is work that is repetitive, error-prone, and low-judgment: provisioning environments, running test suites, packaging artifacts, enforcing naming conventions, applying security baselines. Automating these tasks does not diminish the people doing them — it redirects their attention toward the decisions and investigations where human experience and context actually matter.\n\nWhen automation is designed well, it also makes human intervention easier, not harder. A well-automated deployment pipeline does not prevent a team from intervening in a release — it makes it safe to deploy frequently enough that interventions are rarely necessary, and it makes rollbacks fast when they are.\n\nOne pattern worth being deliberate about is automating governance and compliance checks. In regulated environments, the instinct is often to add manual review steps to sensitive processes. But a manual review that happens inconsistently and is only as good as the reviewer's current knowledge is weaker than an automated check that runs reliably on every change. Automation here does not replace judgment — it ensures that baseline standards are applied uniformly so that human review can focus on the edge cases that genuinely require it.\n\nTechnology should not just make systems faster. It should make people's work better. Automation that achieves that — that frees engineers from toil and gives them the space to think clearly — is some of the most valuable work a platform team can do.",
+    "slug": "automation-is-not-about-replacing-people",
+    "src": "posts/2026/05/2026-05-28-automation-is-not-about-replacing-people.md",
+    "route": "/blog/thoughts/2026/05/28/automation-is-not-about-replacing-people/",
+    "url": "/blog/thoughts/2026/05/28/automation-is-not-about-replacing-people/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/thoughts/2026/05/28/automation-is-not-about-replacing-people/",
+    "legacyUrl": "/blog/post.html?src=posts%2F2026%2F05%2F2026-05-28-automation-is-not-about-replacing-people.md",
+    "published": false
+  },
+  {
+    "title": "Good engineering is not always about building more",
+    "date": "2026-05-27",
+    "category": "Thoughts",
+    "tags": [
+      "platform engineering",
+      "simplicity",
+      "developer experience"
+    ],
+    "keywords": [
+      "friction reduction",
+      "engineering leadership",
+      "consistency"
+    ],
+    "excerpt": "Good engineering often creates value by simplifying systems, reducing friction, and helping teams focus on what matters.",
+    "content": "# Good engineering is not always about building more\n\nIn technology, it is easy to think progress means building more.\n\nMore tools.  \nMore features.  \nMore dashboards.  \nMore automation.  \nMore systems.\n\nBut good engineering is often about making things simpler.\n\nAs a platform engineer, I have learned that the best solutions are not always the most complex ones. Sometimes the real value comes from removing friction, reducing repeated work, improving reliability, and helping teams focus on what matters most.\n\nA strong platform should not make people feel dependent on it. It should make people feel empowered by it.\n\nSome of the most impactful work I have been part of involved removing things rather than adding them: consolidating six overlapping CI/CD tools into one consistent pattern, replacing a fragile manual approval process with a structured pipeline gate, or simplifying a provisioning workflow that required six steps into one that required two. None of that shows up as a new feature, but it created real and lasting improvement in how teams work.\n\nComplexity accumulates gradually. Systems grow as requirements change and new tools are introduced. Before long, teams spend more time managing the tooling than using it. Periodically auditing what is actively used, what can be consolidated, and what can be removed is as important as deciding what to build next.\n\nGood engineering also means being honest about what a solution costs — not just to build, but to maintain. A clever custom solution that solves a problem slightly better than an off-the-shelf tool but requires dedicated engineering support to keep running is often the wrong choice. Buying back simplicity has real value.\n\nThe goal is not to show how complicated the system is. The goal is to make the experience easier, safer, and more consistent for everyone using it. Good engineering quietly removes problems before they become visible. And sometimes, the best thing you build is not another feature — it is a smoother path for others to do their best work.",
+    "slug": "good-engineering-is-not-always-about-building-more",
+    "src": "posts/2026/05/2026-05-27-good-engineering-is-not-always-about-building-more.md",
+    "route": "/blog/thoughts/2026/05/27/good-engineering-is-not-always-about-building-more/",
+    "url": "/blog/thoughts/2026/05/27/good-engineering-is-not-always-about-building-more/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/thoughts/2026/05/27/good-engineering-is-not-always-about-building-more/",
+    "legacyUrl": "/blog/post.html?src=posts%2F2026%2F05%2F2026-05-27-good-engineering-is-not-always-about-building-more.md",
+    "published": false
+  },
+  {
+    "title": "The invisible work behind smooth experiences",
+    "date": "2026-05-26",
+    "category": "Thoughts",
+    "tags": [
+      "platform engineering",
+      "reliability",
+      "automation"
+    ],
+    "keywords": [
+      "developer experience",
+      "operations",
+      "continuous improvement"
+    ],
+    "excerpt": "Smooth digital experiences are often powered by invisible engineering work that removes friction before anyone notices it.",
+    "content": "# The invisible work behind smooth experiences\n\nMost people notice technology only when it stops working.\n\nA website is slow.  \nAn app crashes.  \nA system is unavailable.  \nA deployment fails.\n\nBut when everything works smoothly, the effort behind it often stays invisible.\n\nThat is where platform engineering plays an important role.\n\nA good platform is not just about servers, tools, pipelines, or automation. It is about creating a reliable foundation so teams can build, ship, and improve faster with less friction.\n\nBehind every smooth digital experience, there is often a lot of unseen work: planning, monitoring, automation, security, reliability, and continuous improvement.\n\nIncident response is one example of this invisible work. Every time a problem is caught early — before it reaches a customer — it is because someone invested time in observability, alerting thresholds, runbooks, and on-call processes. The incident that never happened is not visible in any dashboard, but it represents real prevented cost and preserved user trust.\n\nAutomation is another. Every manual step that was replaced by a pipeline, every approval workflow that was standardized, every one-off script that was converted into a reusable process — that work compounds. Teams move faster not because of any single change but because hundreds of friction points were quietly removed over time.\n\nDocumentation and onboarding fall into the same category. A new engineer who gets up to speed in days rather than weeks is benefiting from someone who took the time to write clear guides, create example configurations, and build self-service tools. That investment is invisible from the outside but has lasting impact on every team member who follows.\n\nTo me, platform engineering is a reminder that some of the most valuable work is not always the most visible. Sometimes impact means building something strong enough that others do not have to think about it.",
+    "slug": "the-invisible-work-behind-smooth-experiences",
+    "src": "posts/2026/05/2026-05-26-the-invisible-work-behind-smooth-experiences.md",
+    "route": "/blog/thoughts/2026/05/26/the-invisible-work-behind-smooth-experiences/",
+    "url": "/blog/thoughts/2026/05/26/the-invisible-work-behind-smooth-experiences/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/thoughts/2026/05/26/the-invisible-work-behind-smooth-experiences/",
+    "legacyUrl": "/blog/post.html?src=posts%2F2026%2F05%2F2026-05-26-the-invisible-work-behind-smooth-experiences.md",
+    "published": false
+  },
+  {
+    "title": "Career paths: platform engineering and product thinking",
+    "date": "2026-05-25",
+    "category": "Thoughts",
+    "tags": [
+      "career",
+      "platform engineering",
+      "product thinking"
+    ],
+    "keywords": [
+      "engineering leadership",
+      "developer experience",
+      "growth"
+    ],
+    "excerpt": "Platform engineering benefits from product thinking because the work succeeds only when it improves how other teams build and operate.",
+    "content": "# Career paths: platform engineering and product thinking\n\nMay 25, 2026\n\nPlatform engineering is not only about tools and infrastructure. It also benefits from product thinking. The more the platform is treated like an internal product — with users, feedback loops, adoption metrics, and a roadmap — the more likely it is to solve the right problems for the teams using it.\n\nThe failure mode for platform teams that ignore product thinking is building technically excellent infrastructure that engineers work around rather than with. A well-architected Kubernetes platform that no one wants to deploy to, or a perfectly modular Terraform setup that teams find too complicated to use, delivers less value than something simpler that developers actually adopt and trust.\n\nUnderstanding the developer experience from the consumer's perspective — not just from the platform team's perspective — changes what gets prioritized. It shifts attention toward onboarding time, documentation clarity, error message quality, and feedback loops rather than only system uptime, resource utilization, and architectural purity.\n\nThinking in terms of adoption and outcomes also helps platform teams communicate value more effectively. Saying \"we reduced the time to provision a new environment from three days to two hours\" is more compelling to leadership than \"we refactored our Terraform module structure.\" Both represent the same work, but only one frames it in terms that connect to business velocity.\n\nCareer growth in this direction often means developing habits that are more common in product management than in pure infrastructure engineering: user interviews with internal consumers, lightweight user journey mapping, regular retrospectives on what is causing friction, and a willingness to deprecate features that are not being used rather than maintaining complexity indefinitely.\n\nPlatform engineers who combine deep technical skills with product thinking tend to have more influence on architectural decisions, more effective partnerships with engineering leadership, and more visibility into the problems that are worth solving next.",
+    "slug": "career-paths-platform-engineering-and-product-thinking",
+    "src": "posts/2026/05/2026-05-25-career-paths-platform-engineering.md",
+    "route": "/blog/thoughts/2026/05/25/career-paths-platform-engineering-and-product-thinking/",
+    "url": "/blog/thoughts/2026/05/25/career-paths-platform-engineering-and-product-thinking/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/thoughts/2026/05/25/career-paths-platform-engineering-and-product-thinking/",
+    "legacyUrl": "/blog/post.html?src=posts%2F2026%2F05%2F2026-05-25-career-paths-platform-engineering.md",
+    "published": false
+  },
+  {
+    "title": "AI guardrails and cost controls for production systems",
+    "date": "2026-05-24",
+    "category": "Articles",
+    "tags": [
+      "ai",
+      "guardrails",
+      "cost optimization"
+    ],
+    "keywords": [
+      "rate limiting",
+      "fallback routing",
+      "prompt governance"
+    ],
+    "excerpt": "Production AI systems need both guardrails and cost controls to stay reliable, safe, and financially sustainable.",
+    "content": "# AI guardrails and cost controls for production systems\n\nMay 24, 2026\n\nWhen integrating LLMs and AI services into production, cost and safety quickly become first-class concerns. Unlike traditional API calls where cost is predictable and latency is bounded, AI inference requests can vary dramatically in token consumption, response time, and downstream impact. Building guardrails and cost controls into the platform layer — rather than leaving them to individual application teams — creates consistent behavior across the organization.\n\n## Caching for cost and latency reduction\n\nRepeated and semantically similar inference requests are a significant source of unnecessary cost. A caching layer that stores responses keyed on exact or near-match inputs can eliminate a large fraction of model calls for common query patterns. Semantic caching using vector embeddings — where a new query is compared to a cached query by semantic similarity rather than exact string match — extends this to paraphrased or rephrased variations of the same intent. This is especially effective for FAQ-style workloads, search augmentation, and enterprise knowledge retrieval.\n\n## Rate limiting and quota enforcement\n\nRate limiting prevents individual consumers from exhausting shared model capacity and keeps spend predictable. Enforced at the platform layer, rate limits can be applied per user, per application, per team, or per cost center — with configurable thresholds and clear error responses that let clients implement graceful degradation. Token-based rate limiting (tracking input and output token counts rather than just request counts) is more accurate for LLM workloads where request size varies widely.\n\n## Fallback routing and multi-model orchestration\n\nA single model endpoint is a reliability risk. A fallback routing layer — which redirects to a secondary model or a smaller, faster, lower-cost model when the primary is unavailable, rate-limited, or responding slowly — improves availability and creates cost optimization levers. For workloads where high-quality reasoning is not always required, routing simple queries to a lighter model and complex queries to a more capable model can reduce cost while maintaining acceptable quality across the request mix.\n\n## Prompt and output validation\n\nInput validation at the prompt layer catches policy violations, injection attempts, and data classification issues before they reach the model. Output validation on the response side checks for hallucinations, sensitive data leakage, off-topic responses, and content that violates organizational guidelines. Both layers should generate telemetry that feeds into observability tooling, enabling audit trails for compliance and data for continuous improvement of the guardrail rules.\n\n## Cost attribution and governance dashboards\n\nWithout visibility into which teams and applications are driving AI spend, cost governance is guesswork. Tagging inference requests with application identifiers, user segments, and cost center codes — then surfacing that data in a governance dashboard — gives finance and platform teams the information needed to enforce budgets, identify waste, and make informed decisions about tier selection and caching investment. This is the same cost attribution model that works for cloud compute, applied to AI usage.",
+    "slug": "ai-guardrails-and-cost-controls-for-production-systems",
+    "src": "posts/2026/05/2026-05-24-ai-guardrails-and-cost-controls.md",
+    "route": "/blog/articles/2026/05/24/ai-guardrails-and-cost-controls-for-production-systems/",
+    "url": "/blog/articles/2026/05/24/ai-guardrails-and-cost-controls-for-production-systems/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/articles/2026/05/24/ai-guardrails-and-cost-controls-for-production-systems/",
+    "legacyUrl": "/blog/post.html?src=posts%2F2026%2F05%2F2026-05-24-ai-guardrails-and-cost-controls.md",
+    "published": false
+  },
+  {
+    "title": "Enabling MLOps: pipelines, validation, and model lifecycle",
+    "date": "2026-05-23",
+    "category": "Articles",
+    "tags": [
+      "mlops",
+      "machine learning",
+      "model operations"
+    ],
+    "keywords": [
+      "validation",
+      "deployment",
+      "lifecycle management"
+    ],
+    "excerpt": "MLOps is less about isolated tooling and more about reliable pipelines, validation, and repeatable model operations.",
+    "content": "# Enabling MLOps: pipelines, validation, and model lifecycle\n\nMay 23, 2026\n\nMLOps becomes useful when it improves the reliability of training, validation, deployment, and lifecycle management for machine learning workloads. The goal is not to add process for its own sake — it is to bring the same repeatability and confidence to model operations that CI/CD brings to application delivery.\n\n## Training pipelines and reproducibility\n\nA model training pipeline should be reproducible: given the same data version, code version, and configuration, it should produce a model with consistent behavior. This requires tracking data lineage, pinning dependency versions, and recording hyperparameters and environment state alongside each training run. Azure ML pipelines and Vertex AI managed pipelines both provide run metadata, artifact tracking, and compute configuration logging that make this tractable at scale.\n\n## Validation before promotion\n\nModels should not move to production without automated validation. This means more than checking that training converged — it means evaluating performance on a held-out validation set, running fairness checks, testing for distributional drift between training and serving data, and comparing against the currently deployed model baseline. Gates between pipeline stages enforce these checks rather than relying on manual review that can be skipped under time pressure.\n\n## Deployment patterns and serving infrastructure\n\nOnce validated, a model needs consistent serving infrastructure. Whether using batch inference, real-time online endpoints, or streaming inference, the deployment mechanism should be automated and version-controlled. Blue/green deployments and canary traffic splitting — standard patterns from application delivery — apply directly to model serving: route a small percentage of traffic to a new model version and monitor metrics before promoting it fully.\n\n## Monitoring and drift detection\n\nA model in production degrades over time as the real-world distribution it was trained on shifts. Monitoring inference inputs and outputs for distributional drift, tracking prediction confidence distributions, and alerting when model performance metrics decline below a threshold are all part of operational model management. Without this visibility, model degradation goes unnoticed until it shows up as a product problem.\n\n## Lifecycle management and model registry\n\nA model registry acts as the version-controlled record of every model artifact, its training lineage, evaluation results, and deployment history. Treating the registry as the gate between experimentation and production — requiring models to be registered and pass validation before serving infrastructure references them — creates a clear audit trail and a single source of truth for what is running where. This matters both for compliance in regulated environments and for debugging when a model behavior question arises in production.",
+    "slug": "enabling-mlops-pipelines-validation-and-model-lifecycle",
+    "src": "posts/2026/05/2026-05-23-mlops-enablement.md",
+    "route": "/blog/articles/2026/05/23/enabling-mlops-pipelines-validation-and-model-lifecycle/",
+    "url": "/blog/articles/2026/05/23/enabling-mlops-pipelines-validation-and-model-lifecycle/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/articles/2026/05/23/enabling-mlops-pipelines-validation-and-model-lifecycle/",
+    "legacyUrl": "/blog/post.html?src=posts%2F2026%2F05%2F2026-05-23-mlops-enablement.md",
+    "published": false
+  },
+  {
+    "title": "Building reusable cloud foundations with Terraform",
+    "date": "2026-05-22",
+    "category": "Articles",
+    "tags": [
+      "terraform",
+      "cloud architecture",
+      "infrastructure as code"
+    ],
+    "keywords": [
+      "reusable modules",
+      "governance",
+      "landing zones"
+    ],
+    "excerpt": "Reusable Terraform foundations make cloud provisioning more consistent, governed, and easier to scale across teams.",
+    "content": "# Building reusable cloud foundations with Terraform\n\nMay 22, 2026\n\nReusable cloud foundations reduce repeated engineering effort and improve consistency across environments. When teams provision infrastructure by assembling vetted, versioned modules rather than writing raw configuration from scratch, the result is fewer environment-specific surprises and a shorter path from intent to running infrastructure.\n\n## Why modules matter at scale\n\nWithout reusable modules, every team that needs a Kubernetes cluster, a storage account, or a virtual network tends to write similar Terraform from scratch — with slightly different tagging conventions, inconsistent security defaults, and no shared way to apply updates across the estate. Modules encapsulate decisions once and let callers consume the result without knowing every implementation detail. When a security team requires a new diagnostic setting or a compliance requirement changes a network policy, the fix is made in the module and propagates to all callers at their next apply.\n\n## Designing modules for composability\n\nGood Terraform modules are narrow in scope and composable. A module that provisions an AKS cluster should not also provision the virtual network — it should accept network inputs and focus on the cluster itself. This separation makes each module independently testable, easier to upgrade, and usable across different calling contexts. Output variables from one module should cleanly feed into another without requiring callers to restructure their entire configuration.\n\n## Landing zones as organizational foundations\n\nA landing zone is a pre-configured, governed cloud environment that standardizes how workloads are deployed across an organization. In Azure, this typically includes management group structure, policy assignments, network topology (hub-and-spoke or virtual WAN), identity integration, and centralized logging. Provisioning landing zones with Terraform root modules gives infrastructure teams a repeatable baseline that teams can extend rather than reinvent.\n\n## Governance through policy and guardrails\n\nReusable modules are more valuable when paired with enforcement. Azure Policy, Google Organization Policies, and AWS Service Control Policies let platform teams enforce that provisioned resources meet baseline requirements — encryption at rest, required tags, allowed regions, approved SKUs — regardless of which team ran the Terraform. The combination of modules (guiding correct usage) and policy (preventing incorrect usage) creates a governance model that scales without requiring manual review of every resource.\n\n## Module versioning and upgrade paths\n\nModules should be versioned using semantic versioning and consumed with explicit version constraints. Pinning to a specific version prevents unexpected breakage when a module is updated, while a clear changelog and upgrade notes make it practical for teams to adopt new versions. Storing modules in a private Terraform registry — or a dedicated Git repository with release tags — gives teams a discoverable catalog and a repeatable reference point for every provisioned environment.",
+    "slug": "building-reusable-cloud-foundations-with-terraform",
+    "src": "posts/2026/05/2026-05-22-reusable-cloud-foundations.md",
+    "route": "/blog/articles/2026/05/22/building-reusable-cloud-foundations-with-terraform/",
+    "url": "/blog/articles/2026/05/22/building-reusable-cloud-foundations-with-terraform/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/articles/2026/05/22/building-reusable-cloud-foundations-with-terraform/",
+    "legacyUrl": "/blog/post.html?src=posts%2F2026%2F05%2F2026-05-22-reusable-cloud-foundations.md",
+    "published": false
+  },
+  {
+    "title": "CI/CD modernization: real-world case study",
+    "date": "2026-05-21",
+    "category": "Articles",
+    "tags": [
+      "ci/cd",
+      "modernization",
+      "github actions"
+    ],
+    "keywords": [
+      "delivery transformation",
+      "pipeline design",
+      "release controls"
+    ],
+    "excerpt": "A real-world modernization story focused on moving delivery systems toward stronger automation, controls, and repeatability.",
+    "content": "# CI/CD modernization: real-world case study\n\nMay 21, 2026\n\nModernizing delivery systems is rarely a clean greenfield exercise. Most organizations accumulate years of pipeline scripts, Jenkins jobs, manual release steps, and environment-specific workarounds that work well enough until they do not. The goal of modernization is not to rebuild for its own sake — it is to reduce delivery risk, increase repeatability, and give teams more confidence at each stage of the release process.\n\n## Starting with an honest inventory\n\nBefore redesigning anything, the first step is understanding what currently exists and what it is actually doing. Many legacy pipelines have undocumented dependencies: environment variables that are only set on a specific build agent, secrets that are stored in ways that bypass audit logging, or manual approval steps that are informal rather than enforced. Mapping this before making changes prevents accidental regressions and reveals where the real risk is concentrated.\n\n## Replacing scripts with structured pipeline definitions\n\nJenkins pipelines built from shell scripts work until the engineer who wrote them leaves, the agent reboots in an unexpected state, or a dependency changes silently. Moving toward GitHub Actions workflows or Harness pipelines with reusable templates, explicit input declarations, and version-controlled definitions brings the pipeline into the same governance model as the application code it builds.\n\n## Shifting controls left without adding friction\n\nModern delivery systems move quality and security checks earlier in the pipeline rather than relying on pre-production gates as the primary defense. Static analysis, dependency scanning, unit tests, and infrastructure plan validation run on every pull request — not just before deployment. This catches problems when they are cheaper to fix and reduces the number of changes that reach a gate with known issues already in them.\n\n## Treating environments as code\n\nEnvironment configuration — network rules, feature flag states, service dependencies, secret references — should be declared as code and versioned alongside the infrastructure that serves it. Ad hoc environment changes made through consoles or SSH sessions accumulate into drift that makes deployments unreliable. Infrastructure as Code enforced by the pipeline prevents environments from diverging silently over time.\n\n## Measuring delivery health after modernization\n\nModernization has succeeded when it is measurable. Useful signals include: deployment frequency (how often teams ship), lead time for changes (how long from commit to production), change failure rate (how often deployments require rollback), and mean time to recover (how quickly incidents are resolved). These four DORA metrics give a clear picture of whether the new delivery system is improving outcomes or just shifting complexity.",
+    "slug": "ci-cd-modernization-real-world-case-study",
+    "src": "posts/2026/05/2026-05-21-ci-cd-modernization.md",
+    "route": "/blog/articles/2026/05/21/ci-cd-modernization-real-world-case-study/",
+    "url": "/blog/articles/2026/05/21/ci-cd-modernization-real-world-case-study/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/articles/2026/05/21/ci-cd-modernization-real-world-case-study/",
+    "legacyUrl": "/blog/post.html?src=posts%2F2026%2F05%2F2026-05-21-ci-cd-modernization.md",
+    "published": false
+  },
+  {
+    "title": "Reflections on platform engineering as a career",
+    "date": "2026-05-20",
+    "category": "Thoughts",
+    "tags": [
+      "platform engineering",
+      "career",
+      "learning"
+    ],
+    "keywords": [
+      "growth",
+      "engineering mindset",
+      "adaptability"
+    ],
+    "excerpt": "A short reflection on platform engineering as a career path and the mindset required to keep growing with the work.",
+    "content": "# Reflections on platform engineering as a career\n\nMay 20, 2026\n\nPlatform engineering sits at an unusual intersection. It is deeply technical, yet the value it delivers is almost entirely measured through the outcomes of other teams. That dynamic shapes the career in ways that are not always obvious from the outside.\n\nPlatforms are about enabling other engineers to move faster while staying safe and compliant. Balancing autonomy with guardrails is central to the craft — too much control slows delivery, too little creates risk. Getting that balance right requires understanding the teams using the platform as clearly as the systems powering it.\n\nThe work rewards engineers who are comfortable operating across domains. A platform team might spend one week deep in Kubernetes networking, the next rethinking how Infrastructure as Code modules are structured, and the week after that working on observability instrumentation for a new AI workload. Breadth matters, but so does knowing when to go deep.\n\nCareer growth in platform engineering rarely looks linear. Progress often shows up as fewer incidents, faster onboarding for new teams, fewer one-off exceptions in delivery processes, and improved developer experience scores — not as shipped features or visible product changes. Learning to see and communicate that kind of impact is part of the work.\n\nThe field is also evolving quickly. AI capabilities are changing what platform teams are responsible for — prompt governance, model cost controls, guardrail architectures, and MLOps pipelines are now part of the platform conversation alongside the traditional cloud, Kubernetes, and CI/CD concerns. Staying useful means staying curious and willing to rethink what the platform needs to provide.\n\nWhat makes platform engineering rewarding is the compounding nature of the work. A well-built reusable module, a reliable release pipeline, or a clear runbook does not just solve one problem — it solves that class of problem for every team that encounters it afterward.",
+    "slug": "reflections-on-platform-engineering-as-a-career",
+    "src": "posts/2026/05/2026-05-20-reflections-on-career.md",
+    "route": "/blog/thoughts/2026/05/20/reflections-on-platform-engineering-as-a-career/",
+    "url": "/blog/thoughts/2026/05/20/reflections-on-platform-engineering-as-a-career/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/thoughts/2026/05/20/reflections-on-platform-engineering-as-a-career/",
+    "legacyUrl": "/blog/post.html?src=posts%2F2026%2F05%2F2026-05-20-reflections-on-career.md",
+    "published": true
+  },
+  {
     "title": "Modern CI/CD patterns for reliable delivery",
     "date": "2026-05-19",
     "category": "Articles",
@@ -14,8 +302,14 @@
       "ephemeral runners"
     ],
     "excerpt": "A practical look at enterprise CI/CD patterns such as pipeline isolation, gated promotion, and safer release workflows.",
+    "content": "# Modern CI/CD patterns for reliable delivery\n\nMay 19, 2026\n\nModern CI/CD is not just about automating builds. It is about building confidence at every stage of delivery so that teams can move fast without compromising reliability, safety, or auditability.\n\n## Ephemeral runners and build isolation\n\nUsing ephemeral runners — agents that spin up fresh for each job and terminate when done — eliminates the drift and shared state that come with persistent build agents. Each run gets a clean environment, which improves reproducibility and reduces cross-pipeline contamination. In GitHub Actions, ephemeral self-hosted runners on Kubernetes using the Actions Runner Controller (ARC) pattern provide this isolation alongside full control over the build environment, network policies, and secrets access.\n\n## Pipeline as code and version-controlled delivery\n\nDefining pipelines as code and keeping them in source control means that pipeline changes follow the same review, approval, and audit trail as application changes. Drift between environments becomes visible. Rollbacks are reproducible. Well-structured pipelines are also modular: shared reusable workflow templates handle common steps such as scanning, testing, and artifact publishing, while callers declare intent without duplicating boilerplate logic.\n\n## Gated promotion and environment strategy\n\nReliable delivery systems use explicit promotion gates between environments rather than implicit promotion by timestamp or branch. A build artifact moves from dev to staging to production only when it passes defined criteria: test coverage thresholds, security scan results, performance benchmarks, or manual approvals for regulated change windows. Each gate is a real quality checkpoint, not a formality. Treating them seriously prevents the pattern where a fast-tracked change bypasses a critical environment and introduces a regression into production.\n\n## Feature flags and decoupled deployment\n\nSeparating deployment from release using feature flags lets teams ship code to production before it is activated for users. This reduces the blast radius of new releases, enables gradual rollouts to specific user segments, and makes it safe to deploy during business hours rather than relying on late-night deployments. Flags also provide a fast rollback lever — disabling a flag is faster and lower risk than reverting a commit and redeploying a full artifact.\n\n## Observability as a delivery signal\n\nA pipeline without downstream observability is incomplete. Connecting deployment events to monitoring dashboards — so that a new release is annotated on latency, error rate, and resource graphs — makes it immediately visible whether a deployment introduced a regression. GitHub Actions, Harness, and Jenkins all support deploy event integrations with New Relic, Datadog, and similar platforms. Making deployments observable shifts the posture from \"deploy and hope\" to \"deploy and verify.\"",
+    "slug": "modern-ci-cd-patterns-for-reliable-delivery",
     "src": "posts/2026/05/2026-05-19-deep-dive-ci-cd.md",
-    "url": "/blog/articles/2026/05/19/modern-ci-cd-patterns-for-reliable-delivery/"
+    "route": "/blog/articles/2026/05/19/modern-ci-cd-patterns-for-reliable-delivery/",
+    "url": "/blog/articles/2026/05/19/modern-ci-cd-patterns-for-reliable-delivery/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/articles/2026/05/19/modern-ci-cd-patterns-for-reliable-delivery/",
+    "legacyUrl": "/blog/post.html?src=posts%2F2026%2F05%2F2026-05-19-deep-dive-ci-cd.md",
+    "published": true
   },
   {
     "title": "Introducing the blog",
@@ -32,7 +326,13 @@
       "reflections"
     ],
     "excerpt": "A short introduction to the blog and the kinds of platform engineering, cloud, and MLOps topics it will cover.",
+    "content": "# Introducing the blog\n\nMay 18, 2026\n\nThis blog is a place to share practical lessons from platform engineering, cloud architecture, CI/CD modernization, MLOps, and the quieter parts of building reliable systems.\n\nSome posts will be technical deep dives. Others will be short reflections on engineering culture, learning, reliability, and the invisible work that helps teams move faster.\n\nThe goal is simple: document useful patterns, clarify what is working, and keep building a portfolio of ideas grounded in real engineering work.\n\nOver the past ten years, I have worked across Azure, GCP, AWS, Kubernetes, Terraform, and a range of delivery tooling spanning regulated industries where reliability, security, and governance matter alongside engineering speed. That context shapes what gets prioritized and what trade-offs get made.\n\nPlatform engineering is a domain where the output is rarely a single product — it is the capability for others to build better products. The work is often structural: designing reusable foundations, tightening feedback loops, reducing toil, and creating guardrails that let teams move with confidence rather than caution.\n\nWriting is also a form of thinking out loud. Putting ideas into words surfaces what is still unclear, forces sharper reasoning, and creates something that can be revisited and challenged. That is reason enough to start and keep going.\n\nThe posts here will stay grounded in real problems: infrastructure design decisions, delivery automation patterns, observability gaps, MLOps enablement challenges, AI platform considerations, and the trade-offs that rarely appear in documentation but always appear in production.\n\nTechnical work benefits from reflection. Some of the most useful lessons do not come from building the right thing — they come from understanding why something worked, why something did not, and what would be done differently with the same constraints.",
+    "slug": "introducing-the-blog",
     "src": "posts/2026/05/2026-05-18-sample-post.md",
-    "url": "/blog/thoughts/2026/05/18/introducing-the-blog/"
+    "route": "/blog/thoughts/2026/05/18/introducing-the-blog/",
+    "url": "/blog/thoughts/2026/05/18/introducing-the-blog/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/thoughts/2026/05/18/introducing-the-blog/",
+    "legacyUrl": "/blog/post.html?src=posts%2F2026%2F05%2F2026-05-18-sample-post.md",
+    "published": true
   }
 ]

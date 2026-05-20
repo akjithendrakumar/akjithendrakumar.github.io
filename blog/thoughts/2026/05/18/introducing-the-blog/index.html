@@ -19,8 +19,9 @@
       </a>
       <nav class="site-nav site-nav-mobile" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <a href="/blog/">Blog</a>
         <a href="/resume.html">Resume</a>
+        <a href="/blog/">All Posts</a>
+        <a href="/blog/?type=thoughts">Thoughts</a>
       </nav>
     </div>
   </header>
@@ -31,7 +32,8 @@
         <nav class="site-nav-desktop">
           <a href="/">Home</a>
           <a href="/resume.html">Resume</a>
-          <a href="/blog/">Blog</a>
+          <a href="/blog/">All Posts</a>
+          <a href="/blog/?type=thoughts">Thoughts</a>
         </nav>
       </div>
     </aside>
@@ -46,11 +48,15 @@
             <div class="panel-card">
               <p class="panel-label">Share</p>
               <h3 id="share-title">Share this post</h3>
-              <p class="muted-note">Use the LinkedIn share action or customize the text below.</p>
-              <div style="display:flex; gap:0.5rem; margin:0.75rem 0; flex-wrap:wrap">
-                <button id="open-linkedin" class="btn btn-primary">Open LinkedIn share</button>
+              <div class="share-bar" id="post-share-bar" style="margin-top:0.75rem">
+                <a id="share-linkedin" class="share-btn" href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a id="share-twitter" class="share-btn" href="#" target="_blank" rel="noopener noreferrer">X / Twitter</a>
+                <a id="share-whatsapp" class="share-btn" href="#" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                <a id="share-telegram" class="share-btn" href="#" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a id="share-signal" class="share-btn" href="#">Signal</a>
+                <a id="share-email" class="share-btn" href="#">Email</a>
+                <button id="share-copy" class="share-btn" type="button">Copy Link</button>
               </div>
-              <textarea id="share-text" style="width:100%; min-height:84px; padding:0.6rem; border-radius:8px; border:1px solid var(--line);"></textarea>
             </div>
           </aside>
         </div>
@@ -64,7 +70,7 @@
     </div>
   </footer>
 
-  <script id="post-data" type="application/json">{"title":"Introducing the blog","date":"2026-05-18","category":"Thoughts","tags":["platform engineering","writing","portfolio"],"keywords":["introduction","blog","reflections"],"excerpt":"A short introduction to the blog and the kinds of platform engineering, cloud, and MLOps topics it will cover.","content":"# Introducing the blog\n\nMay 18, 2026\n\nThis blog is a place to share practical lessons from platform engineering, cloud architecture, CI/CD modernization, MLOps, and the quieter parts of building reliable systems.\n\nSome posts will be technical deep dives. Others will be short reflections on engineering culture, learning, reliability, and the invisible work that helps teams move faster.\n\nThe goal is simple: document useful patterns, clarify what is working, and keep building a portfolio of ideas grounded in real engineering work.","slug":"introducing-the-blog","src":"posts/2026/05/2026-05-18-sample-post.md","route":"/blog/thoughts/2026/05/18/introducing-the-blog/","url":"/blog/thoughts/2026/05/18/introducing-the-blog/","absoluteUrl":"https://akjithendrakumar.github.io/blog/thoughts/2026/05/18/introducing-the-blog/","legacyUrl":"/blog/post.html?src=posts%2F2026%2F05%2F2026-05-18-sample-post.md","published":true}</script>
+  <script id="post-data" type="application/json">{"title":"Introducing the blog","date":"2026-05-18","category":"Thoughts","tags":["platform engineering","writing","portfolio"],"keywords":["introduction","blog","reflections"],"excerpt":"A short introduction to the blog and the kinds of platform engineering, cloud, and MLOps topics it will cover.","content":"# Introducing the blog\n\nMay 18, 2026\n\nThis blog is a place to share practical lessons from platform engineering, cloud architecture, CI/CD modernization, MLOps, and the quieter parts of building reliable systems.\n\nSome posts will be technical deep dives. Others will be short reflections on engineering culture, learning, reliability, and the invisible work that helps teams move faster.\n\nThe goal is simple: document useful patterns, clarify what is working, and keep building a portfolio of ideas grounded in real engineering work.\n\nOver the past ten years, I have worked across Azure, GCP, AWS, Kubernetes, Terraform, and a range of delivery tooling spanning regulated industries where reliability, security, and governance matter alongside engineering speed. That context shapes what gets prioritized and what trade-offs get made.\n\nPlatform engineering is a domain where the output is rarely a single product — it is the capability for others to build better products. The work is often structural: designing reusable foundations, tightening feedback loops, reducing toil, and creating guardrails that let teams move with confidence rather than caution.\n\nWriting is also a form of thinking out loud. Putting ideas into words surfaces what is still unclear, forces sharper reasoning, and creates something that can be revisited and challenged. That is reason enough to start and keep going.\n\nThe posts here will stay grounded in real problems: infrastructure design decisions, delivery automation patterns, observability gaps, MLOps enablement challenges, AI platform considerations, and the trade-offs that rarely appear in documentation but always appear in production.\n\nTechnical work benefits from reflection. Some of the most useful lessons do not come from building the right thing — they come from understanding why something worked, why something did not, and what would be done differently with the same constraints.","slug":"introducing-the-blog","src":"posts/2026/05/2026-05-18-sample-post.md","route":"/blog/thoughts/2026/05/18/introducing-the-blog/","url":"/blog/thoughts/2026/05/18/introducing-the-blog/","absoluteUrl":"https://akjithendrakumar.github.io/blog/thoughts/2026/05/18/introducing-the-blog/","legacyUrl":"/blog/post.html?src=posts%2F2026%2F05%2F2026-05-18-sample-post.md","published":true}</script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="/assets/script.js"></script>
   <script>
@@ -85,15 +91,40 @@
       document.getElementById('share-panel').style.display = 'block';
       document.getElementById('share-title').textContent = post.title;
 
-      const hashtags = (post.tags || []).map(function (tag) {
-        return '#' + String(tag).replace(/[^a-zA-Z0-9]/g, '');
-      }).join(' ');
       const pageUrl = window.location.href;
-      const suggested = post.title + '\n\n' + post.excerpt + '\n\nRead more: ' + pageUrl + (hashtags ? '\n\n' + hashtags : '');
-      document.getElementById('share-text').value = suggested;
-      document.getElementById('open-linkedin').addEventListener('click', function () {
-        const shareUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(pageUrl);
-        window.open(shareUrl, '_blank', 'noopener');
+      const url = encodeURIComponent(pageUrl);
+      const title = encodeURIComponent(post.title);
+      const hashtags = (post.tags || []).map(function (tag) {
+        return '%23' + String(tag).replace(/[^a-zA-Z0-9]/g, '');
+      }).join('%20');
+      const tweetText = hashtags ? title + '%20' + hashtags : title;
+
+      document.getElementById('share-linkedin').href =
+        'https://www.linkedin.com/sharing/share-offsite/?url=' + url;
+      document.getElementById('share-twitter').href =
+        'https://x.com/intent/tweet?url=' + url + '&text=' + tweetText;
+      document.getElementById('share-whatsapp').href =
+        'https://wa.me/?text=' + title + '%20' + url;
+      document.getElementById('share-telegram').href =
+        'https://t.me/share/url?url=' + url + '&text=' + title;
+      document.getElementById('share-email').href =
+        'mailto:?subject=' + title + '&body=' + encodeURIComponent('Check out this post: ' + pageUrl);
+
+      // Signal and Copy both copy the link to clipboard
+      ['share-signal', 'share-copy'].forEach(function (id) {
+        document.getElementById(id).addEventListener('click', function (e) {
+          e.preventDefault();
+          var btn = document.getElementById(id);
+          navigator.clipboard.writeText(pageUrl).then(function () {
+            var orig = btn.textContent;
+            btn.textContent = 'Copied!';
+            btn.classList.add('is-copied');
+            setTimeout(function () {
+              btn.textContent = orig;
+              btn.classList.remove('is-copied');
+            }, 2000);
+          });
+        });
       });
     }
 
