@@ -9,10 +9,30 @@ const POSTS_DIR = path.join(BLOG_DIR, 'posts');
 const POSTS_INDEX = path.join(POSTS_DIR, 'index.json');
 const RSS_OUT = path.join(ROOT, 'rss.xml');
 const OG_DIR = path.join(ROOT, 'assets', 'og');
+const PORTFOLIO_DATA = path.join(ROOT, 'data', 'portfolio.json');
 const GENERATED_CATEGORY_DIRS = ['thoughts', 'articles', 'whitepapers'];
 const SITE_URL = 'https://akjithendrakumar.github.io';
 
+const args = process.argv.slice(2);
+const blogOnly = args.includes('--blog-only');
+const portfolioOnly = args.includes('--portfolio-only');
+
 async function main() {
+  const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+
+  try {
+    if (!portfolioOnly) {
+      await runBlogGeneration(browser);
+    }
+    if (!blogOnly) {
+      await runPortfolioGeneration(browser);
+    }
+  } finally {
+    await browser.close();
+  }
+}
+
+async function runBlogGeneration(browser) {
   await fs.ensureDir(OG_DIR);
   await cleanGeneratedPostDirs();
 
@@ -66,7 +86,133 @@ async function main() {
 
   await writeStaticPostPages(posts);
   await writeRss(posts);
-  await writeOgImagesAndResume(posts);
+  await writeOgImages(browser, posts);
+}
+
+async function runPortfolioGeneration(browser) {
+  if (!await fs.pathExists(PORTFOLIO_DATA)) {
+    console.log('No data/portfolio.json found, skipping portfolio generation');
+    return;
+  }
+
+  const data = await fs.readJSON(PORTFOLIO_DATA);
+  await injectPortfolioIntoHtml(data);
+  await writeResumePdf(browser);
+}
+
+async function injectPortfolioIntoHtml(data) {
+  const indexPath = path.join(ROOT, 'index.html');
+  const resumePath = path.join(ROOT, 'resume.html');
+
+  let indexHtml = await fs.readFile(indexPath, 'utf8');
+  let resumeHtml = await fs.readFile(resumePath, 'utf8');
+
+  indexHtml = injectSection(indexHtml, 'hero-inner', renderHeroInner(data.hero));
+  indexHtml = injectSection(indexHtml, 'hero-panel', renderHeroPanel(data.hero));
+  indexHtml = injectSection(indexHtml, 'about-paragraphs', renderAboutParagraphs(data.about));
+  indexHtml = injectSection(indexHtml, 'interests-cards', renderInterestsCards(data.interests));
+  indexHtml = injectSection(indexHtml, 'accomplishments-cards', renderAccomplishmentsCards(data.accomplishments));
+  indexHtml = injectSection(indexHtml, 'experience-items', renderExperienceItems(data.experience));
+  indexHtml = injectSection(indexHtml, 'skills-groups', renderSkillsGroups(data.skills));
+  indexHtml = injectSection(indexHtml, 'todo-items', renderTodoItems(data.todo));
+  indexHtml = injectSection(indexHtml, 'contact-body', renderContactBody(data.contact));
+
+  resumeHtml = injectSection(resumeHtml, 'resume-summary', renderResumeSummary(data.resume));
+  resumeHtml = injectSection(resumeHtml, 'experience-highlights', renderExperienceHighlights(data.resume));
+
+  await fs.writeFile(indexPath, indexHtml);
+  console.log('Injected portfolio data into', indexPath);
+  await fs.writeFile(resumePath, resumeHtml);
+  console.log('Injected portfolio data into', resumePath);
+}
+
+function injectSection(html, name, content) {
+  const open = `<!-- PORTFOLIO:${name} -->`;
+  const close = `<!-- /PORTFOLIO:${name} -->`;
+  const escaped = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`${escaped(open)}[\\s\\S]*?${escaped(close)}`);
+  return html.replace(regex, `${open}\n${content}\n          ${close}`);
+}
+
+function renderHeroInner(hero) {
+  const facts = (hero.quickFacts || []).map((f) => `            <li>${escapeHtml(f)}</li>`).join('\n');
+  return `          <p class="eyebrow">${escapeHtml(hero.eyebrow)}</p>
+          <h1>${escapeHtml(hero.headline)}</h1>
+          <p class="hero-copy">
+            ${escapeHtml(hero.summary)}
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="${escapeHtml(hero.linkedinUrl)}" target="_blank" rel="noreferrer">View LinkedIn</a>
+            <a class="btn btn-secondary" href="#accomplishments">See Accomplishments</a>
+          </div>
+          <ul class="quick-facts" aria-label="Highlights">
+${facts}
+          </ul>`;
+}
+
+function renderHeroPanel(hero) {
+  const stats = (hero.stats || []).map((s) =>
+    `            <article class="stat-card">\n              <strong>${escapeHtml(s.strong)}</strong>\n              <span>${escapeHtml(s.span)}</span>\n            </article>`
+  ).join('\n');
+  return `          <div class="panel-card">
+            <p class="panel-label">Current focus</p>
+            <h2>${escapeHtml(hero.focusHeadline)}</h2>
+            <p>
+              ${escapeHtml(hero.focusBody)}
+            </p>
+          </div>
+          <div class="stats-grid">
+${stats}
+          </div>`;
+}
+
+function renderAboutParagraphs(about) {
+  return (about.paragraphs || []).map((p) => `          <p>\n            ${escapeHtml(p)}\n          </p>`).join('\n');
+}
+
+function renderInterestsCards(interests) {
+  return (interests || []).map((item) =>
+    `          <article class="info-card">\n            <h3>${escapeHtml(item.title)}</h3>\n            <p>${escapeHtml(item.body)}</p>\n          </article>`
+  ).join('\n');
+}
+
+function renderAccomplishmentsCards(accomplishments) {
+  return (accomplishments || []).map((item) =>
+    `          <article class="achievement-card">\n            <h3>${escapeHtml(item.title)}</h3>\n            <p>${escapeHtml(item.body)}</p>\n          </article>`
+  ).join('\n');
+}
+
+function renderExperienceItems(experience) {
+  return (experience || []).map((item) =>
+    `          <article class="timeline-item">\n            <div class="timeline-meta">\n              <span>${escapeHtml(item.period)}</span>\n              <strong>${escapeHtml(item.company)}</strong>\n            </div>\n            <div class="timeline-body">\n              <h3>${escapeHtml(item.title)}</h3>\n              <p>${escapeHtml(item.body)}</p>\n            </div>\n          </article>`
+  ).join('\n');
+}
+
+function renderSkillsGroups(skills) {
+  return (skills || []).map((group) => {
+    const tags = (group.tags || []).map((t) => `<span>${escapeHtml(t)}</span>`).join('');
+    return `          <div>\n            <h3>${escapeHtml(group.group)}</h3>\n            <div class="tags">\n              ${tags}\n            </div>\n          </div>`;
+  }).join('\n');
+}
+
+function renderTodoItems(todo) {
+  return (todo || []).map((item) =>
+    `            <li><input type="checkbox" /> <span>${escapeHtml(item)}</span></li>`
+  ).join('\n');
+}
+
+function renderContactBody(contact) {
+  return `          <p>\n            ${escapeHtml(contact.body)}\n          </p>`;
+}
+
+function renderResumeSummary(resume) {
+  return `          <p>${escapeHtml(resume.summary)}</p>`;
+}
+
+function renderExperienceHighlights(resume) {
+  return (resume.experienceHighlights || []).map((item) =>
+    `          <p><strong>${escapeHtml(item.title)}</strong> — ${escapeHtml(item.company)}, ${escapeHtml(item.period)}</p>`
+  ).join('\n');
 }
 
 async function cleanGeneratedPostDirs() {
@@ -99,36 +245,32 @@ async function writeRss(posts) {
   console.log('Wrote', RSS_OUT);
 }
 
-async function writeOgImagesAndResume(posts) {
-  const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-
-  try {
-    for (const post of posts) {
-      const ogPath = path.join(OG_DIR, `${post.slug}.png`);
-      const page = await browser.newPage();
-      await page.setViewport({ width: 1200, height: 630 });
-      await page.setContent(ogSvg(post.title, post.date));
-      await page.screenshot({ path: ogPath });
-      await page.close();
-      console.log('Wrote OG', ogPath);
-    }
-
-    const resumeHtml = `file://${path.join(ROOT, 'resume.html').replace(/\\/g, '/')}`;
-    const resumePage = await browser.newPage();
-    await resumePage.goto(resumeHtml, { waitUntil: 'networkidle0' });
-    await resumePage.emulateMediaType('print');
-    const outPdf = path.join(ROOT, 'assets', 'resume.pdf');
-    await resumePage.pdf({
-      path: outPdf,
-      format: 'A4',
-      printBackground: false,
-      margin: { top: '18mm', bottom: '18mm', left: '16mm', right: '16mm' },
-    });
-    console.log('Wrote PDF', outPdf);
-    await resumePage.close();
-  } finally {
-    await browser.close();
+async function writeOgImages(browser, posts) {
+  for (const post of posts) {
+    const ogPath = path.join(OG_DIR, `${post.slug}.png`);
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1200, height: 630 });
+    await page.setContent(ogSvg(post.title, post.date));
+    await page.screenshot({ path: ogPath });
+    await page.close();
+    console.log('Wrote OG', ogPath);
   }
+}
+
+async function writeResumePdf(browser) {
+  const resumeHtml = `file://${path.join(ROOT, 'resume.html').replace(/\\/g, '/')}`;
+  const resumePage = await browser.newPage();
+  await resumePage.goto(resumeHtml, { waitUntil: 'networkidle0' });
+  await resumePage.emulateMediaType('print');
+  const outPdf = path.join(ROOT, 'assets', 'resume.pdf');
+  await resumePage.pdf({
+    path: outPdf,
+    format: 'A4',
+    printBackground: false,
+    margin: { top: '18mm', bottom: '18mm', left: '16mm', right: '16mm' },
+  });
+  console.log('Wrote PDF', outPdf);
+  await resumePage.close();
 }
 
 async function collectMarkdownFiles(rootDir, currentDir = rootDir) {

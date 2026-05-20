@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "generate": "node ./scripts/generate.js"
+    "generate": "node ./scripts/generate.js",
+    "generate-blog": "node ./scripts/generate.js --blog-only",
+    "generate-portfolio": "node ./scripts/generate.js --portfolio-only"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
