@@ -5,12 +5,12 @@
   --bg-alt: #0e1324;
   --surface: rgba(14, 19, 36, 0.74);
   --surface-strong: rgba(22, 29, 54, 0.96);
-  --text: #d4e3ff;
+  --text: #daeeff;
   --heading: #ffffff;
-  --muted: #7a9ab8;
-  --line: rgba(120, 160, 210, 0.28);
-  --accent: #5ce0ff;
-  --accent-strong: #a0ecff;
+  --muted: #8fbdda;
+  --line: rgba(130, 175, 225, 0.32);
+  --accent: #3ed8ff;
+  --accent-strong: #b0ecff;
   --accent-soft: rgba(92, 224, 255, 0.14);
   --shadow: 0 24px 70px rgba(2, 6, 23, 0.45);
   --radius: 24px;
@@ -237,6 +237,7 @@ h3 {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  text-shadow: 0 0 18px rgba(62, 216, 255, 0.5);
 }
 
 h1,
@@ -264,6 +265,10 @@ h1 {
   letter-spacing: -0.05em;
   max-width: 12ch;
   margin-bottom: 1.25rem;
+  background: linear-gradient(150deg, #ffffff 0%, #8eceff 55%, #c4a0ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 h2 {
@@ -562,6 +567,11 @@ h3 {
 .info-card,
 .achievement-card {
   padding: 1.4rem;
+}
+
+.info-card h3,
+.achievement-card h3 {
+  color: var(--accent-strong);
 }
 
 .timeline {

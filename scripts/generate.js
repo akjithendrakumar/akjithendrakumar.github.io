@@ -258,7 +258,6 @@ function renderPostPage(post) {
         <a href="/resume.html">Resume</a>
         <a href="/blog/">All Posts</a>
         <a href="/blog/?type=thoughts">Thoughts</a>
-        <a href="/blog/?type=whitepapers">Whitepapers</a>
       </nav>
     </div>
   </header>
@@ -271,7 +270,6 @@ function renderPostPage(post) {
           <a href="/resume.html">Resume</a>
           <a href="/blog/">All Posts</a>
           <a href="/blog/?type=thoughts">Thoughts</a>
-          <a href="/blog/?type=whitepapers">Whitepapers</a>
         </nav>
       </div>
     </aside>

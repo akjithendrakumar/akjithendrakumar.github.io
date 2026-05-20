@@ -22,7 +22,6 @@
         <a href="/resume.html">Resume</a>
         <a href="/blog/">All Posts</a>
         <a href="/blog/?type=thoughts">Thoughts</a>
-        <a href="/blog/?type=whitepapers">Whitepapers</a>
       </nav>
     </div>
   </header>
@@ -35,7 +34,6 @@
           <a href="/resume.html">Resume</a>
           <a href="/blog/">All Posts</a>
           <a href="/blog/?type=thoughts">Thoughts</a>
-          <a href="/blog/?type=whitepapers">Whitepapers</a>
         </nav>
       </div>
     </aside>
@@ -45,7 +43,7 @@
       <div class="section-heading narrow">
         <p class="section-kicker">Blog</p>
         <h2>Recent posts</h2>
-        <p>Short thoughts, technical articles, and future long-form whitepapers on platform engineering, cloud, CI/CD, MLOps, and AI systems.</p>
+        <p>Short thoughts and technical articles on platform engineering, cloud, CI/CD, MLOps, and AI systems.</p>
       </div>
 
       <div class="blog-filter-bar">
@@ -72,7 +70,6 @@
       <div class="blog-category-pills" aria-label="Blog categories">
         <button type="button" class="blog-category-pill is-active" data-category="">All</button>
         <button type="button" class="blog-category-pill" data-category="Thoughts" data-label="Thoughts">Thoughts</button>
-        <button type="button" class="blog-category-pill" data-category="Whitepapers" data-label="Whitepapers">Whitepapers</button>
       </div>
 
       <div class="blog-results-meta" id="results-meta">
@@ -211,7 +208,7 @@
           const dictionaryTerms = new Set();
 
           posts.forEach(post => {
-            if (post.category && post.category !== 'Articles') categories.add(post.category);
+            if (post.category && post.category !== 'Articles' && post.category !== 'Whitepapers') categories.add(post.category);
             (post.tags || []).forEach(tag => topics.add(tag));
             (post.keywords || []).forEach(keyword => topics.add(keyword));
             [post.title, post.category, ...(post.tags || []), ...(post.keywords || [])]
@@ -283,7 +280,7 @@
 
             const typeParam = new URLSearchParams(location.search).get('type');
             if (typeParam) {
-              const catMap = { thoughts: 'Thoughts', whitepapers: 'Whitepapers' };
+              const catMap = { thoughts: 'Thoughts' };
               const cat = catMap[typeParam.toLowerCase()];
               if (cat) {
                 document.getElementById('category-filter').value = cat;
