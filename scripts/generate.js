@@ -81,7 +81,10 @@ async function runBlogGeneration(browser) {
   }
 
   posts.sort((a, b) => b.date.localeCompare(a.date));
-  await fs.writeFile(POSTS_INDEX, JSON.stringify(posts, null, 2));
+
+  const publishedPosts = posts.filter((p) => p.published);
+  const indexEntries = publishedPosts.map(({ content, src, legacyUrl, ...pub }) => pub);
+  await fs.writeFile(POSTS_INDEX, JSON.stringify(indexEntries, null, 2));
   console.log('Wrote', POSTS_INDEX);
 
   await writeStaticPostPages(posts);
