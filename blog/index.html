@@ -21,7 +21,7 @@
         <a href="/">Home</a>
         <a href="/resume.html">Resume</a>
         <a href="/blog/">All Posts</a>
-        <a href="/blog/?type=thoughts">Thoughts</a>
+        <span id="blog-nav-mobile"></span>
       </nav>
     </div>
   </header>
@@ -33,7 +33,7 @@
           <a href="/">Home</a>
           <a href="/resume.html">Resume</a>
           <a href="/blog/">All Posts</a>
-          <a href="/blog/?type=thoughts">Thoughts</a>
+          <span id="blog-nav-desktop"></span>
         </nav>
       </div>
     </aside>
@@ -67,9 +67,8 @@
         <a class="btn btn-secondary" href="/rss.xml">RSS</a>
       </div>
 
-      <div class="blog-category-pills" aria-label="Blog categories">
+      <div class="blog-category-pills" id="blog-category-pills" aria-label="Blog categories">
         <button type="button" class="blog-category-pill is-active" data-category="">All</button>
-        <button type="button" class="blog-category-pill" data-category="Thoughts" data-label="Thoughts">Thoughts</button>
       </div>
 
       <div class="blog-results-meta" id="results-meta">
@@ -87,6 +86,7 @@
         let filtered = [];
         let currentPage = 1;
         const pageSize = 6;
+        let categoryMap = {}; // slug -> display label, built from data
 
         function parsePublishDate(dateString) {
           if (!dateString) return null;
@@ -123,7 +123,7 @@
             article.className = 'achievement-card';
             const tagList = (p.tags || []).map(tag => `<span>${tag}</span>`).join('');
             article.innerHTML = `
-              <p class="panel-label">${p.category || 'Articles'}</p>
+              <p class="panel-label">${p.category || 'General'}</p>
               <h3><a href="${p.url}">${p.title}</a></h3>
               <p class="muted-note">${p.date} · ${(p.tags || []).join(', ') || 'General'}</p>
               <p class="hero-copy">${p.excerpt}</p>
@@ -154,20 +154,51 @@
         }
 
         function setActiveCategory(category) {
-          document.querySelectorAll('.blog-category-pill[data-category]').forEach(button => {
+          document.querySelectorAll('.blog-category-pill').forEach(button => {
             button.classList.toggle('is-active', button.dataset.category === category);
           });
         }
 
-        function syncCategoryPills(posts) {
-          const publishedCategories = new Set(posts.map(post => post.category).filter(Boolean));
-          document.querySelectorAll('.blog-category-pill[data-label]').forEach(button => {
-            const category = button.dataset.category;
-            const label = button.dataset.label;
-            const available = publishedCategories.has(category);
-            button.disabled = !available;
-            button.classList.toggle('is-disabled', !available);
-            button.textContent = available ? label : `${label} Soon`;
+        function buildCategoryPills(categories) {
+          const pillsContainer = document.getElementById('blog-category-pills');
+          categories.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'blog-category-pill';
+            btn.dataset.category = cat;
+            btn.textContent = cat;
+            btn.addEventListener('click', () => {
+              document.getElementById('category-filter').value = cat;
+              applyFilters();
+            });
+            pillsContainer.appendChild(btn);
+          });
+
+          // Wire the All button now that pills are ready
+          pillsContainer.querySelector('[data-category=""]').addEventListener('click', () => {
+            document.getElementById('category-filter').value = '';
+            applyFilters();
+          });
+        }
+
+        function buildNavLinks(categories) {
+          const mobileNav = document.getElementById('blog-nav-mobile');
+          const desktopNav = document.getElementById('blog-nav-desktop');
+
+          categories.forEach(cat => {
+            const slug = cat.toLowerCase().replace(/\s+/g, '-');
+            [mobileNav, desktopNav].forEach(container => {
+              const a = document.createElement('a');
+              a.href = `/blog/?type=${slug}`;
+              a.textContent = cat;
+              a.addEventListener('click', e => {
+                e.preventDefault();
+                document.getElementById('category-filter').value = cat;
+                applyFilters();
+                history.pushState(null, '', `/blog/?type=${slug}`);
+              });
+              container.appendChild(a);
+            });
           });
         }
 
@@ -190,7 +221,7 @@
 
           const params = new URLSearchParams(location.search);
           if (category) {
-            params.set('type', category.toLowerCase());
+            params.set('type', category.toLowerCase().replace(/\s+/g, '-'));
           } else {
             params.delete('type');
           }
@@ -198,30 +229,29 @@
           history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
         }
 
-        function populateFilterOptions(posts) {
+        function populateFilterOptions(posts, categories) {
           const categoryFilter = document.getElementById('category-filter');
           const topicFilter = document.getElementById('topic-filter');
           const dictionary = document.getElementById('blog-dictionary');
 
-          const categories = new Set();
           const topics = new Set();
           const dictionaryTerms = new Set();
 
+          // Category dropdown — one option per distinct category in data
+          categories.forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat;
+            option.textContent = cat;
+            categoryFilter.appendChild(option);
+          });
+
           posts.forEach(post => {
-            if (post.category && post.category !== 'Articles' && post.category !== 'Whitepapers') categories.add(post.category);
             (post.tags || []).forEach(tag => topics.add(tag));
             (post.keywords || []).forEach(keyword => topics.add(keyword));
             [post.title, post.category, ...(post.tags || []), ...(post.keywords || [])]
               .filter(Boolean)
               .forEach(term => dictionaryTerms.add(term));
           });
-
-          for (const category of Array.from(categories).sort()) {
-            const option = document.createElement('option');
-            option.value = category;
-            option.textContent = category;
-            categoryFilter.appendChild(option);
-          }
 
           for (const topic of Array.from(topics).sort((a, b) => a.localeCompare(b))) {
             const option = document.createElement('option');
@@ -241,22 +271,27 @@
           document.getElementById('category-filter').addEventListener('change', applyFilters);
           document.getElementById('topic-filter').addEventListener('change', applyFilters);
           document.getElementById('search-input').addEventListener('input', applyFilters);
-
-          document.querySelectorAll('.blog-category-pill[data-category]').forEach(button => {
-            button.addEventListener('click', () => {
-              document.getElementById('category-filter').value = button.dataset.category;
-              applyFilters();
-            });
-          });
         }
 
         async function loadPosts() {
           try {
             const res = await fetch('posts/index.json');
             allPosts = (await res.json()).filter(isPublished);
-            allPosts.sort((a,b)=> b.date.localeCompare(a.date));
-            syncCategoryPills(allPosts);
-            populateFilterOptions(allPosts);
+            allPosts.sort((a, b) => b.date.localeCompare(a.date));
+
+            // Derive categories from data, preserving first-seen order then sorting
+            const categories = Array.from(
+              new Set(allPosts.map(p => p.category).filter(Boolean))
+            ).sort();
+
+            // Build slug->label map for URL routing
+            categories.forEach(cat => {
+              categoryMap[cat.toLowerCase().replace(/\s+/g, '-')] = cat;
+            });
+
+            buildCategoryPills(categories);
+            buildNavLinks(categories);
+            populateFilterOptions(allPosts, categories);
             wireFilterEvents();
 
             const sentinel = document.getElementById('scroll-sentinel');
@@ -266,8 +301,7 @@
                   const total = Math.ceil(filtered.length / pageSize);
                   if (currentPage < total) {
                     currentPage++;
-                    const next = paginate(filtered, currentPage);
-                    render(next, true);
+                    render(paginate(filtered, currentPage), true);
                   }
                 }
               }
@@ -278,10 +312,10 @@
             render(paginate(filtered, currentPage));
             updatePageInfo();
 
+            // Restore filter from URL param
             const typeParam = new URLSearchParams(location.search).get('type');
             if (typeParam) {
-              const catMap = { thoughts: 'Thoughts' };
-              const cat = catMap[typeParam.toLowerCase()];
+              const cat = categoryMap[typeParam.toLowerCase()];
               if (cat) {
                 document.getElementById('category-filter').value = cat;
                 applyFilters();
@@ -291,6 +325,7 @@
             document.getElementById('posts-list').innerText = 'Unable to load posts.';
           }
         }
+
         document.addEventListener('DOMContentLoaded', loadPosts);
       </script>
     </div>
