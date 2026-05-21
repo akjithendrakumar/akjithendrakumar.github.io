@@ -15,9 +15,9 @@
     ],
     "excerpt": "A short reflection on platform engineering as a career path and the mindset required to keep growing with the work.",
     "slug": "reflections-on-platform-engineering-as-a-career",
-    "route": "/blog/thoughts/2026/05/20/reflections-on-platform-engineering-as-a-career/",
-    "url": "/blog/thoughts/2026/05/20/reflections-on-platform-engineering-as-a-career/",
-    "absoluteUrl": "https://akjithendrakumar.github.io/blog/thoughts/2026/05/20/reflections-on-platform-engineering-as-a-career/",
+    "route": "/blog/thoughts/reflections-on-platform-engineering-as-a-career/",
+    "url": "/blog/thoughts/reflections-on-platform-engineering-as-a-career/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/thoughts/reflections-on-platform-engineering-as-a-career/",
     "published": true
   },
   {
@@ -36,9 +36,9 @@
     ],
     "excerpt": "A practical look at enterprise CI/CD patterns such as pipeline isolation, gated promotion, and safer release workflows.",
     "slug": "modern-ci-cd-patterns-for-reliable-delivery",
-    "route": "/blog/articles/2026/05/19/modern-ci-cd-patterns-for-reliable-delivery/",
-    "url": "/blog/articles/2026/05/19/modern-ci-cd-patterns-for-reliable-delivery/",
-    "absoluteUrl": "https://akjithendrakumar.github.io/blog/articles/2026/05/19/modern-ci-cd-patterns-for-reliable-delivery/",
+    "route": "/blog/articles/modern-ci-cd-patterns-for-reliable-delivery/",
+    "url": "/blog/articles/modern-ci-cd-patterns-for-reliable-delivery/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/articles/modern-ci-cd-patterns-for-reliable-delivery/",
     "published": true
   },
   {
@@ -57,9 +57,9 @@
     ],
     "excerpt": "A short introduction to the blog and the kinds of platform engineering, cloud, and MLOps topics it will cover.",
     "slug": "introducing-the-blog",
-    "route": "/blog/thoughts/2026/05/18/introducing-the-blog/",
-    "url": "/blog/thoughts/2026/05/18/introducing-the-blog/",
-    "absoluteUrl": "https://akjithendrakumar.github.io/blog/thoughts/2026/05/18/introducing-the-blog/",
+    "route": "/blog/thoughts/introducing-the-blog/",
+    "url": "/blog/thoughts/introducing-the-blog/",
+    "absoluteUrl": "https://akjithendrakumar.github.io/blog/thoughts/introducing-the-blog/",
     "published": true
   }
 ]

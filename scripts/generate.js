@@ -55,7 +55,7 @@ async function runBlogGeneration(browser) {
     const tags = Array.isArray(parsed.data.tags) ? parsed.data.tags : [];
     const keywords = Array.isArray(parsed.data.keywords) ? parsed.data.keywords : [];
     const excerpt = parsed.data.excerpt || extractExcerpt(parsed.content);
-    const content = parsed.content.trim();
+    const content = stripStandaloneDates(parsed.content.trim());
     const webPath = toWebPath(file);
     const src = `posts/${webPath}`;
     const slug = parsed.data.slug || slugify(title);
@@ -314,6 +314,10 @@ function toWebPath(file) {
   return file.split(path.sep).join('/');
 }
 
+function stripStandaloneDates(content) {
+  return content.replace(/^(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4}\s*$/gm, '').replace(/\n{3,}/g, '\n\n').trim();
+}
+
 function extractExcerpt(content) {
   const lines = content.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
   for (const line of lines) {
@@ -355,9 +359,8 @@ function slugifyCategory(category) {
   return normalized || 'articles';
 }
 
-function buildRoute(category, date, slug) {
-  const [year, month, day] = date.split('-');
-  return `/blog/${slugifyCategory(category)}/${year}/${month}/${day}/${slug}/`;
+function buildRoute(category, _date, slug) {
+  return `/blog/${slugifyCategory(category)}/${slug}/`;
 }
 
 function ogSvg(title, date) {
